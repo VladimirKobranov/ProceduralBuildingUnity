@@ -1,0 +1,28 @@
+{
+  "name": "@bluepjs/vm",
+  "version": "0.1.0",
+  "description": "Virtual Machine for @bluepjs blueprints execution",
+  "main": "./src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "files": [
+    "src/*"
+  ],
+  "keywords": ["bluepjs","virtual machine","blueprint","vm"],
+  "author": "Evgeny Trifonov <abrakadobr@gmail.com>",
+  "homepage": "https://github.com/bluep-js/vm#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bluep-js/vm"
+  },
+  "bugs": {
+    "url": "https://github.com/bluep-js/vm/-/issues"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "cron-parser": "^4.2.0",
+    "dayjs": "^1.10.7",
+    "uuid": "^8.3.2"
+  }
+}
