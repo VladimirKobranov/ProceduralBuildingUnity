@@ -74,7 +74,8 @@ class CronModule extends AbstractModule {
 
   libraryUpdate () {
     const libs = this._vm.libraries()
-    const crons = Object.values(libs.default.functions).filter(f => f.event && f.event.module === 'cron' && f.event.code === 'cron')
+    const functions = libs && libs.default && libs.default.functions ? libs.default.functions : {}
+    const crons = Object.values(functions).filter(f => f.event && f.event.module === 'cron' && f.event.code === 'cron')
     crons.forEach(fn => {
       const cfg = fn.event.config
       if (this._crons[fn.code] && this._crons[fn.code].cron === cfg.schedule) return
@@ -96,7 +97,7 @@ class CronModule extends AbstractModule {
       }
     })
     Object.keys(this._crons).forEach(fnCode => {
-      if (libs.default.functions[fnCode] && libs.default.functions[fnCode].event && libs.default.functions[fnCode].event.module === 'cron' && libs.default.functions[fnCode].event.code === 'cron') return
+      if (functions[fnCode] && functions[fnCode].event && functions[fnCode].event.module === 'cron' && functions[fnCode].event.code === 'cron') return
       delete this._crons[fnCode]
     })
   }

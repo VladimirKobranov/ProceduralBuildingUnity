@@ -41,7 +41,7 @@ const ideData = vm.ideData()
 
 Provided information also includes stringified functions to be runned in IDE for nice integration.
 
-Official IDE is https://gitlab.com/bluepjs/vue3-ide
+Official IDE is https://github.com/bluep-js/vue3-ide
 
 ## Actors
 
@@ -165,3 +165,9 @@ VM is developed together with IDE and next steps are:
  - Arrays support
  - Type Templates support
  - Classes and OOP support
+
+# Changelog
+
+## 0.1.1
+
+Fixed errors on empty libraries

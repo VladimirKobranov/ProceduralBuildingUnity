@@ -113,6 +113,7 @@ class Vm {
   }
 
   async runFunction(info) {
+    if (!this._libraries || !this._libraries[info.library] || !this._libraries[info.library].functions) return
     const fn = Object.values(this._libraries[info.library].functions).find(f => f.code === info.code)
     if (!fn) return
     const res = this.runLibraryFunction(fn.library, fn.code, info.inputs)
@@ -120,6 +121,7 @@ class Vm {
   }
 
   async runLibraryFunction(lib, fn, inputs) {
+    if (!this._libraries || !this._libraries[lib] || !this._libraries[lib].functions || !this._libraries[lib].functions[fn]) return
     if (this._debug)
       this.console().log('Vm::runfn', lib, fn, inputs)
     const graph = this._libraries[lib].functions[fn]
