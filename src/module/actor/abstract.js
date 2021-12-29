@@ -13,26 +13,37 @@ class AbstractActor extends EventEmitter {
 
   static metadata() {
     return {
-      code: 'abstract',
+      code: 'actor/abstract',
       name: 'Abstract Actor',
+      internal: false, //to hide from ide
       state: {},
       methods: {},
       events: {}
     }
   }
 
+  // should update metadata info with actor id and may append other specific info
+  metadata () { return { id: this.id(), ...this.constructor.metadata() } }
+
+  /**
+    constructor
+
+    @param id [string] - unique actor id.
+  */
   constructor(id) {
     super()
     this._id = id || uuid()
     this._vm = null
   }
 
+  // get/set id
   id(next) {
     if (typeof next !== 'undefined')
       this._id = next
     return this._id
   }
 
+  // get/set vm
   vm(next) {
     if (typeof next !== 'undefined')
       this._vm = next

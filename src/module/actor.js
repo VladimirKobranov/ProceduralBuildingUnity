@@ -1,3 +1,4 @@
+const dayjs = require('dayjs')
 const AbstractModule = require('./abstract')
 
 const ActorState = require('./actor/node.state')
@@ -8,7 +9,20 @@ class ActorModule extends AbstractModule {
   static metadata() {
     return {
       code: 'actor',
-      name: 'Actor'
+      name: 'Actor',
+      events: {
+        start: {
+          code: 'start',
+          name: 'VM Start',
+          outputs: {
+            now: {
+              code: 'now',
+              name: 'Now',
+              type: 'basic/datetime'
+            }
+          }
+        }
+      }
     }
   }
 
@@ -58,6 +72,16 @@ class ActorModule extends AbstractModule {
     }
   }
 
+  start () {
+    const libs = this._vm.libraries()
+    const functions = libs && libs.default && libs.default.functions ? libs.default.functions : {}
+    const starts = Object.values(functions).filter(f => f.event && f.event.module === 'actor' && f.event.code === 'start')
+    const now = dayjs()
+    starts.forEach(fn => {
+      this._vm.runLibraryFunction('default', fn.code, {now})
+    })
+  }
+
   constructor(vm) {
     super(vm)
 
@@ -80,6 +104,8 @@ class ActorModule extends AbstractModule {
     this.updateActorsEventsIndex()
     Object.values(info.events || {}).forEach(event => {
       actor.on(event.event, inputs => {
+        if (!this._vm.running())
+          return
         if (this._debug)
           this.console().log('actor event!', id, event.event, inputs)
         if (this._actorsEvents[id] && Array.isArray(this._actorsEvents[id][event.event])) {
@@ -97,6 +123,13 @@ class ActorModule extends AbstractModule {
     actor.vm(null)
     const info = actor.constructor.metadata()
     const id = actor.id()
+    if (this._actors[id])
+      this._actors[id].removeAllListeners()
+    /*
+    Object.values(info.events || {}).forEach(event => {
+      this._actors[id].removeAllListeners(event.event)
+    })
+    */
     this._actors[id] = null
     this.updateActorsEventsIndex()
   }

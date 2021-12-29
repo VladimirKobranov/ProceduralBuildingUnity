@@ -39,6 +39,7 @@ class CronModule extends AbstractModule {
     super(vm)
 
     this._crons = {}
+    this._timer = null
     
     // cron cheker
     let last = {
@@ -46,7 +47,13 @@ class CronModule extends AbstractModule {
       minutes: -1,
       hours: -1
     }
-    setInterval(() => {
+
+  }
+
+  start () {
+    if (this._timer)
+      return
+    this._timer = setInterval(() => {
       const now = dayjs()
       const nobj = now.toObject()
       nobj.months++
@@ -56,6 +63,13 @@ class CronModule extends AbstractModule {
       last = nobj
       this.checkCrons(now, nobj)
     }, 200) // 200ms tolerance
+  }
+
+  stop () {
+    if (!this._timer)
+      reurn
+    clearInterval(this._timer)
+    this._timer = null
   }
 
   checkCrons(now, nobj) {

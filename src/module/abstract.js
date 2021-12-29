@@ -22,9 +22,8 @@ class AbstractModule {
     this._vm = vm
   }
 
-  ideInfo() {
-    return null
-  }
+  async start () {}
+  async stop () {}
 
   libraryUpdate() {}
 }
