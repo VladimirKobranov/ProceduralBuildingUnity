@@ -27,7 +27,7 @@ class VariableSet extends AbstractNode {
   }
 
   async execute(inputs) {
-    this.log('execute', this._node.code, inputs)
+    this.debug('execute', this._node.code, inputs)
     this._context.setOutput(this._node.data.context, this._node.data.code, inputs[this._node.data.code])
     return 'return'
   }

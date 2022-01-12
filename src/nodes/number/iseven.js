@@ -27,7 +27,7 @@ class NumberIsEven extends AbstractNode {
   }
 
   async execute(inputs) {
-    this.log('execute', inputs)
+    this.debug('execute', inputs)
     this.setOutput('iseven', inputs.number % 2 === 0)
   }
 }

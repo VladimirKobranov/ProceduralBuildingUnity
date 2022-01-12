@@ -23,7 +23,7 @@ class StructPack extends AbstractNode {
   }
 
   async execute(inputs) {
-    this.log('execute', inputs)
+    this.debug('execute', inputs)
     /*
     const ret = {}
     Object.keys(this._node.data.schema).forEach(code => {

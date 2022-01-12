@@ -33,7 +33,7 @@ class Now extends AbstractNode {
   }
 
   async execute(inputs) {
-    this.log('execute', inputs)
+    this.debug('execute', inputs)
     const ret = dayjs()
     this.setOutput('datetime', ret)
     return 'return'

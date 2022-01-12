@@ -37,7 +37,7 @@ class DatetimeToString extends AbstractNode {
   }
 
   async execute(inputs) {
-    this.log('execute', inputs)
+    this.debug('execute', inputs)
     const d = dayjs(inputs.datetime)
     const ret = d.format(inputs.format)
     this.setOutput('result', ret)

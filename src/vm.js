@@ -2,8 +2,9 @@ const BaseTypes = require('./types')
 const BaseNodes = require('./nodes/')
 const Graph = require('./graph')
 
-const CronModule = require('./module/cron')
+const CoreModule = require('./module/core')
 const ActorModule = require('./module/actor')
+const CronModule = require('./module/cron')
 
 /**
  * @bluepjs Virtual Machine class
@@ -34,6 +35,7 @@ class Vm {
     // loading base nodes
     Object.values(BaseNodes).forEach(Node => this.registerNode(Node))
     // adding base modules
+    this.addModule(CoreModule)
     this.addModule(CronModule)
     this.addModule(ActorModule)
   }
@@ -67,6 +69,7 @@ class Vm {
     return Object.values(this.M('actor').actors())
       .filter(x => !!x)
       .map(a => a.metadata())
+      .filter(a => !a.internal)
       .reduce((acc,a) => { acc[a.id] = a; return acc }, {})
   }
 

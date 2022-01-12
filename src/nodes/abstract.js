@@ -19,10 +19,8 @@ class AbstractNode {
       // templates: {}
     }
   }
-  
+   
   log(msg, ...objs) {
-    if (!this.vm()._debug)
-      return
     const meta = this.constructor.metadata()
     if (!objs.length)
       this.vm().console().log(`${meta.name}::${msg}`)
@@ -30,9 +28,15 @@ class AbstractNode {
       this.vm().console().log(`${meta.name}::${msg}`, ...objs)
   }
   
+  debug(msg, ...objs) {
+    const meta = this.constructor.metadata()
+    if (!objs.length)
+      this.vm().console().debug(`${meta.name}::${msg}`)
+    else
+      this.vm().console().debug(`${meta.name}::${msg}`, ...objs)
+  }
+  
   error(msg, ...objs) {
-    // if (!this.vm()._debug)
-      // return
     const meta = this.constructor.metadata()
     if (!objs.length)
       this.vm().console().error(`${meta.name}::${msg}`)
@@ -50,7 +54,7 @@ class AbstractNode {
   }
 
   async execute(inputs) {
-    this.log('AbstractNode::execute', inputs, this._context)
+    this.debug('AbstractNode::execute', inputs, this._context)
     return 'return'
   }
 
@@ -92,7 +96,7 @@ class AbstractNode {
   }
 
   async callOutput(code) {
-    this.log('callOutput', code, this._context)
+    this.debug('callOutput', code, this._context)
     await this._graph.executeBranch(this._node.id, code, this._context)
   }
 }

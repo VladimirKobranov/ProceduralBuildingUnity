@@ -9,20 +9,7 @@ class ActorModule extends AbstractModule {
   static metadata() {
     return {
       code: 'actor',
-      name: 'Actor',
-      events: {
-        start: {
-          code: 'start',
-          name: 'VM Start',
-          outputs: {
-            now: {
-              code: 'now',
-              name: 'Now',
-              type: 'basic/datetime'
-            }
-          }
-        }
-      }
+      name: 'Actor'
     }
   }
 
@@ -70,16 +57,6 @@ class ActorModule extends AbstractModule {
         // console.log('types', {libraries, currentLibrary, actors, types})
       }
     }
-  }
-
-  start () {
-    const libs = this._vm.libraries()
-    const functions = libs && libs.default && libs.default.functions ? libs.default.functions : {}
-    const starts = Object.values(functions).filter(f => f.event && f.event.module === 'actor' && f.event.code === 'start')
-    const now = dayjs()
-    starts.forEach(fn => {
-      this._vm.runLibraryFunction('default', fn.code, {now})
-    })
   }
 
   constructor(vm) {

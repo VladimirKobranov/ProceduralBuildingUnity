@@ -30,7 +30,7 @@ class ConsoleLog extends AbstractNode {
   }
 
   async execute(inputs) {
-    this.log('execute', inputs)
+    this.debug('execute', inputs)
     this.vm().console().log(inputs.message)
     return 'return'
   }

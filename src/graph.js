@@ -68,12 +68,10 @@ class Graph {
 
   async execute(inputs) {
     if (!this._graph) {
-      if (this._vm._debug)
-        this._vm.console().error('no graph!', this)
+      this._vm.console().error('no graph!', this)
       return
     }
-    if (this._vm._debug)
-      this._vm.console().log('Graph::execute', this.name(), inputs)
+    this._vm.console().debug('Graph::execute', this.name(), inputs)
     const ctx = new Context(this)
     Object.keys(this._graph.context.variables).forEach(vcode => {
       ctx.setOutput('variables', vcode, this._graph.context.variables[vcode].value)
@@ -130,8 +128,7 @@ class Graph {
 
   async executeBranch(nodeFrom, slotFrom, context) {
     const nodeFromInfo = this.getNode(nodeFrom)
-    if (this._vm._debug)
-      this._vm.console().log('Graph::executeBranch', nodeFromInfo.outputs[slotFrom])
+    this._vm.console().debug('Graph::executeBranch', nodeFromInfo.outputs[slotFrom])
     let next = null
     if (!nodeFromInfo.outputs[slotFrom]
         || nodeFromInfo.outputs[slotFrom].type !== 'basic/execute'
