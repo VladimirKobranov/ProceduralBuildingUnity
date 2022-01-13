@@ -67,7 +67,7 @@ class CronModule extends AbstractModule {
 
   stop () {
     if (!this._timer)
-      reurn
+      return
     clearInterval(this._timer)
     this._timer = null
   }
