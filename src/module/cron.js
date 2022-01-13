@@ -42,7 +42,7 @@ class CronModule extends AbstractModule {
     this._timer = null
     
     // cron cheker
-    let last = {
+    this._lastCron = {
       seconds: -1,
       minutes: -1,
       hours: -1
@@ -58,9 +58,9 @@ class CronModule extends AbstractModule {
       const nobj = now.toObject()
       nobj.months++
       nobj.dayOfWeek = now.day()
-      if (last.seconds === nobj.seconds && last.minutes === nobj.minutes && last.hours === nobj.hours)
+      if (this._lastCron.seconds === nobj.seconds && this._lastCron.minutes === nobj.minutes && this._lastCron.hours === nobj.hours)
         return
-      last = nobj
+      this._lastCron = nobj
       this.checkCrons(now, nobj)
     }, 200) // 200ms tolerance
   }

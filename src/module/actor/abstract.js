@@ -54,7 +54,9 @@ class AbstractActor extends EventEmitter {
   state(code) {}
 
   // calls method 
-  async method(method, inputs) {}
+  async method(method, inputs) {
+    console.error('AbstractActor::method is not overriden in child actor!', method, inputs, this)
+  }
 }
 
 module.exports = AbstractActor

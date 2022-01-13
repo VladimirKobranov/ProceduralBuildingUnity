@@ -8,6 +8,7 @@ class Graph {
     this._vm = vm
     this._outputs = {}
     this._graph = null
+    this._self = null
   }
 
   load(graph) {
@@ -31,6 +32,11 @@ class Graph {
   library(next) {
     if (next) this._graph.library = next
     return this._graph.library
+  }
+
+  self(next) {
+    if (next) this._self = next
+    return this._self
   }
 
   entry(next) {
@@ -72,7 +78,7 @@ class Graph {
       return
     }
     this._vm.console().debug('Graph::execute', this.name(), inputs)
-    const ctx = new Context(this)
+    const ctx = new Context(this, this._self)
     Object.keys(this._graph.context.variables).forEach(vcode => {
       ctx.setOutput('variables', vcode, this._graph.context.variables[vcode].value)
     })

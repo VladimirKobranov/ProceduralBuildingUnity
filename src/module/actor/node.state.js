@@ -14,6 +14,11 @@ class ActorState extends AbstractNode {
           code: 'call',
           name: 'Call',
           type: 'basic/execute'
+        },
+        actor: {
+          code: 'actor',
+          name: 'Actor',
+          type: 'bluep/class'
         }
       },
       outputs: {
@@ -26,9 +31,10 @@ class ActorState extends AbstractNode {
     }
   }
 
-  async execute() {
-    this.log('execute', this._node.data.actor)
-    const actor = this.vm().M('actor').actor(this._node.data.actor)
+  async execute(inputs) {
+    this.debug('execute', this._node.data.actor)
+    // const actor = this.vm().M('actor').actor(this._node.data.actor)
+    const actor = inputs.actor
     if (!actor) {
       return 'return'
     }

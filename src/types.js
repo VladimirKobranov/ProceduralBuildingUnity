@@ -66,6 +66,14 @@ const BaseTypes = {
     code: 'bluep/enum',
     color: '#7aa'
   }
+  /*
+  special not visible types
+  'bluep/classselector': {
+    name: 'Blueprint Class Selector',
+    code: 'bluep/classselector',
+    color: '#a99'
+  },
+  */
 }
 
 module.exports = BaseTypes

@@ -6,6 +6,8 @@ const CoreModule = require('./module/core')
 const ActorModule = require('./module/actor')
 const CronModule = require('./module/cron')
 
+const jclone = obj => JSON.parse(JSON.stringify(obj))
+
 /**
  * @bluepjs Virtual Machine class
  */
@@ -190,9 +192,10 @@ class Vm {
     return Object.values(this._modules)
       .map(m => {
         const info = m.constructor.metadata() 
-        const ide = m.constructor.ide()
-        if (!Object.keys(ide || {}).length)
-          return info
+        // const ide = m.constructor.ide()
+        // if (!Object.keys(ide || {}).length)
+        return info
+        /*
         info.ide = {}
         // when VM runing in browser - we don't need to convert functions
         // when runing in nodejs (backend) - ide methods should be stringified
@@ -203,6 +206,7 @@ class Vm {
             info.ide.nodes = ide.nodes.toString()
         }
         return info
+        */
       })
       .reduce((acc,m) => { acc[m.code] = m; return acc }, {})
   }
@@ -264,6 +268,155 @@ class Vm {
     return bp.getResult()
   }
 
+  /**
+   *  Run Blueprint class constructor from library by params.
+   *  @async
+   *  @param {object} self - object to apply constructor
+   *  @param {string} lib - library code where function located
+   *  @param {string} fn - constructor code
+   *  @param {Object} inputs - function inputs
+   *  @returns {any} function result
+   */
+  async runLibraryConstructor(self, lib, cls, fn, inputs) {
+    if (!this._run || !this._libraries || !this._libraries[lib] || !this._libraries[lib].classes) return
+    this.console().debug('Vm::class::constructor', self, lib, cls, fn, inputs)
+    // console.log('Vm::class::constructor', self, lib, cls, fn, inputs)
+    const graph = this._libraries[lib].classes[cls].methods[fn]
+    const bp = new Graph(this)
+    bp.self(self)
+    bp.load(graph)
+    await bp.execute(inputs)
+    this.console().debug('Vm::constructor::executed', bp.name(), bp.getResult())
+    return bp.getResult()
+  }
+
+  /**
+   *  Run Blueprint class method from library by params.
+   *  @async
+   *  @param {object} self - object to apply constructor
+   *  @param {string} lib - library code where function located
+   *  @param {string} fn - function code
+   *  @param {Object} inputs - function inputs
+   *  @returns {any} function result
+   */
+  async runLibraryMethod(self, lib, cls, fn, inputs) {
+    if (!this._run || !this._libraries || !this._libraries[lib] || !this._libraries[lib].classes || !this._libraries[lib].classes[cls] || !this._libraries[lib].classes[cls].methods[fn]) return
+    this.console().debug('Vm::class::method', self, lib, cls, fn, inputs)
+    const graph = this._libraries[lib].classes[cls].methods[fn]
+    const bp = new Graph(this)
+    bp.self(self)
+    bp.load(graph)
+    await bp.execute(inputs)
+    this.console().debug('Vm::class::method::executed', bp.name(), bp.getResult())
+    return bp.getResult()
+  }
+
+  /**
+   *  Class parents classes
+   *  @param {string} classCode - class code
+   *  @param {string} library - class library
+   *  @returns {object} class parents. direct and deep extended.
+   */
+   classParents (classCode, library) {
+    const ret = { direct: [], back: [] }
+    const cls = this._libraries[library].classes[classCode]
+    if (!cls || !Object.keys(cls.extends || {}).length) return ret
+    const modules = this.modules()
+    Object.values(cls.extends).forEach(ext => {
+      const inf = { ...ext }
+      if (ext.module && modules && modules[ext.module] && modules[ext.module].classes[ext.code]) {
+        inf.src = modules[ext.module].classes[ext.code]
+      }
+      if (inf.library) {
+        inf.src = this._libraries[inf.library].classes[inf.code]
+        const parents = this.classParents(inf.code, inf.library)
+        ret.back = [...ret.back, ...parents.direct, ...parents.back]
+      }
+      ret.direct.push(inf)
+    })
+    ret.back = ret.back.filter((cls, i, self) => self.indexOf(cls) === i)
+    ret.index = [...ret.direct, ...ret.back].map(c => {
+      if (c.library) return `library/${c.library}/${c.code}`
+      return `module/${c.module}/${c.code}`
+    })
+    return ret
+  }
+
+  /**
+   *  Class combined
+   *  @param {string} classCode - class code
+   *  @param {string} library - class library
+   *  @param {object} libraries - libraries object
+   *  @param {object} modules - modules metadata
+   *  @returns {object|null} full class combined object
+   */
+  /**/
+  classCombined (clsCode) {
+    let lib = null
+    Object.keys(this._libraries).forEach(l => {
+      if (this._libraries[l].classes && Object.keys(this._libraries[l].classes).includes(clsCode)) lib = l
+    })
+    if (!lib || !this._libraries[lib].classes[clsCode]) return null
+    const cls = jclone(this._libraries[lib].classes[clsCode])
+    const parents = this.classParents(clsCode, lib)
+    const list = [...parents.direct, ...parents.back]
+    cls.deep = {
+      schema: {},
+      methods: {},
+      overrides: {},
+      parents: []
+    }
+    list.forEach(parent => {
+      cls.deep.parents.push(parent.src.code)
+      // properties
+      Object.keys(parent.src.schema || {}).forEach(fld => {
+        // if (parent.src.schema[fld].access === 'private') return
+        cls.deep.schema[fld] = jclone(parent.src.schema[fld])
+        cls.deep.schema[fld].source = {
+          library: parent.library,
+          libraryName: this._libraries[parent.library].name,
+          code: parent.src.code,
+          name: parent.src.name
+        }
+      })
+      Object.keys(parent.src.methods || {}).forEach(mcode => {
+        // if (parent.src.methods[mcode].access === 'private') return
+        // parent method is overriden in class
+        const over = Object.values(cls.methods || {}).find(m => m.overrides === mcode)
+        if (over) {
+          cls.deep.overrides[mcode] = jclone(parent.src.methods[mcode])
+          cls.deep.overrides[mcode].source = {
+            library: parent.library,
+            libraryName: this._libraries[parent.library].name,
+            code: parent.src.code,
+            name: parent.src.name
+          }
+          return
+        }
+        // parent method is overriden in other parent class
+        if (Object.values(cls.deep.methods || {}).find(m => m.overrides === mcode)) return
+        // or already was checked and moved to overrides
+        if (Object.values(cls.deep.overrides || {}).find(m => m.overrides === mcode)) return
+        cls.deep.methods[mcode] = jclone(parent.src.methods[mcode])
+        cls.deep.methods[mcode].source = {
+          library: parent.library,
+          libraryName: this._libraries[parent.library].name,
+          code: parent.src.code,
+          name: parent.src.name
+        }
+        // parent method overrides other deep method
+        const po = parent.src.methods[mcode].overrides
+        const md = cls.deep.methods[po]
+        if (po && md) {
+          const over = jclone(cls.deep.methods[po])
+          delete cls.deep.methods[po]
+          cls.deep.overrides[po] = over
+        }
+      })
+    })
+    return cls
+  }
+  /**/
 }
 
 module.exports = Vm

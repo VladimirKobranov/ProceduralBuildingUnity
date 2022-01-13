@@ -1,9 +1,12 @@
 class Context {
 
-  constructor(vm) {
+  constructor(vm, self) {
     this._vm = vm
     this._outputs = {}
+    this._self = self
   }
+
+  self() { return this._self }
 
   setOutput(node, slot, val) {
     if (!this._outputs[node])
