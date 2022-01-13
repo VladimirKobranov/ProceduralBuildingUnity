@@ -27,7 +27,7 @@ class EnumToString extends AbstractNode {
   }
 
   async execute(inputs) {
-    this.log('execute', inputs)
+    this.debug('execute', inputs)
     const ret = this._node.data.values[inputs.option]
     this.setOutput('string', `${ret}`)
   }

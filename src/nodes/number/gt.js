@@ -37,7 +37,7 @@ class NumberIsGreater extends AbstractNode {
   }
 
   async execute(inputs) {
-    this.log('execute', inputs)
+    this.debug('execute', inputs)
     const a = inputs.numberA
     const b = inputs.numberB
     const eq = inputs.equal

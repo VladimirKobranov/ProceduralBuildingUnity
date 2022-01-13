@@ -23,7 +23,7 @@ class StructUnpack extends AbstractNode {
   }
 
   async execute(inputs) {
-    this.log('execute', inputs)
+    this.debug('execute', inputs)
     const obj = inputs.struct || {}
     Object.keys(this._node.data.schema).forEach(code => {
       this.setOutput(code, obj[code])

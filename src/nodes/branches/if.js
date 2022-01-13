@@ -37,7 +37,7 @@ class If extends AbstractNode {
   }
 
   async execute(inputs) {
-    this.log('If::execute', inputs)
+    this.debug('If::execute', inputs)
     if (inputs.condition)
       return 'ifTrue'
     return 'ifFalse'

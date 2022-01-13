@@ -61,7 +61,7 @@ class DatetimeCreate extends AbstractNode {
   }
 
   async execute(inputs) {
-    this.log('execute', inputs)
+    this.debug('execute', inputs)
     const ret = dayjs(inputs)
     this.setOutput('datetime', ret)
   }

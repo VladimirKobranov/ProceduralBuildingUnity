@@ -27,7 +27,7 @@ class CallFunction extends AbstractNode {
   }
 
   async execute(inputs) {
-    this.log('execute', inputs)
+    this.debug('execute', inputs)
     const paths = this._node.code.split('/')
     const outputs = await this._graph._vm.runLibraryFunction(this._node.data.library, this._node.data.fid, inputs)
     Object.keys(this._node.outputs).forEach(key => {

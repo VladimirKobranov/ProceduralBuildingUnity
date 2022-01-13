@@ -21,7 +21,7 @@ class Call extends AbstractNode {
   }
 
   async execute(inputs) {
-    this.log('execute', inputs)
+    this.debug('execute', inputs)
     Object.keys(this._node.outputs).forEach(key => {
       const slot = this._node.outputs[key]
       if (slot.type === 'basic/execute') return

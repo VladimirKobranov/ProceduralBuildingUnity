@@ -4,8 +4,7 @@ const AbstractNode = require('../abstract')
 class Each extends AbstractNode {
 
   static metadata() {
-    return {
-      name: 'Each',
+    return { name: 'Each',
       code: 'array/each',
       type: 'execute',
       deleteable: true,
@@ -58,9 +57,14 @@ class Each extends AbstractNode {
   }
 
   async execute(inputs) {
-    console.log('execute', inputs)
-    const ret = dayjs()
-    this.setOutput('datetime', ret)
+    this.debug('execute', inputs)
+    if (!Array.isArray(inputs.array))
+      return 'return'
+    for (let i = 0; i < inputs.array.length; i++) {
+      this.setOutput('index', i)
+      this.setOutput('element', inputs.array[i])
+      await this.callOutput('loop')
+    }
     return 'return'
   }
 }

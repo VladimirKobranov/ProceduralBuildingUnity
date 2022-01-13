@@ -61,7 +61,7 @@ class DatetimeUnwrap extends AbstractNode {
   }
 
   async execute(inputs) {
-    this.log('execute', inputs)
+    this.debug('execute', inputs)
     const d = dayjs(inputs.datetime)
     const ret = d.toObject()
     Object.keys(ret).forEach(key => {

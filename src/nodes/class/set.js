@@ -1,22 +1,24 @@
 const AbstractNode = require('../abstract')
 
-class ConsoleLog extends AbstractNode {
+class ClassVariableSet extends AbstractNode {
 
   static metadata() {
     return {
-      name: 'Console log',
-      code: 'console/consolelog',
+      name: 'ClassVariableSet',
+      code: 'class/set',
       type: 'execute',
+      deleteable: true,
+      addable: false,
       inputs: {
         call: {
           code: 'call',
           name: 'Call',
           type: 'basic/execute'
         },
-        message: {
-          code: 'message',
-          name: 'Message',
-          type: 'basic/string'
+        object: {
+          code: 'object',
+          name: 'Object',
+          type: 'bluep/class'
         }
       },
       outputs: {
@@ -30,11 +32,11 @@ class ConsoleLog extends AbstractNode {
   }
 
   async execute(inputs) {
-    this.debug('execute', inputs)
-    this.vm().console().log(inputs.message)
+    this.debug('execute', this._node.code, inputs)
+    if (!inputs.object) return 'return'
+    inputs.object[this._node.data.code] = inputs[this._node.data.code]
     return 'return'
   }
-
 }
 
-module.exports = ConsoleLog
+module.exports = ClassVariableSet

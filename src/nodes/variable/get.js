@@ -15,7 +15,7 @@ class VariableGet extends AbstractNode {
   }
 
   async execute(inputs) {
-    this.log('execute', this._node.code)
+    this.debug('execute', this._node.code)
     const val = this._context.getOutput(this._node.data.context, this._node.data.code)
     this.setOutput(this._node.data.code, val)
   }

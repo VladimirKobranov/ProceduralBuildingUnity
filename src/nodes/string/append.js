@@ -30,7 +30,7 @@ class StringAppend extends AbstractNode {
   }
 
   async execute(inputs) {
-    this.log('execute', inputs)
+    this.debug('execute', inputs)
     this.setOutput('result', `${inputs.source}${inputs.append}`)
   }
 }

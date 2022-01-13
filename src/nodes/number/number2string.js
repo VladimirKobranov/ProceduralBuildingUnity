@@ -27,7 +27,7 @@ class NumberToString extends AbstractNode {
   }
 
   async execute(inputs) {
-    this.log('execute', inputs)
+    this.debug('execute', inputs)
     this.setOutput('string', `${inputs.number}`)
   }
 }

@@ -14,6 +14,11 @@ class ActorMethod extends AbstractNode {
           code: 'call',
           name: 'Call',
           type: 'basic/execute'
+        },
+        actor: {
+          code: 'actor',
+          name: 'Actor',
+          type: 'bluep/class'
         }
       },
       outputs: {
@@ -27,12 +32,17 @@ class ActorMethod extends AbstractNode {
   }
 
   async execute(inputs) {
-    this.log('execute', this._node.data, inputs)
-    const actor = this.vm().M('actor').actor(this._node.data.actor)
+    this.debug('execute', this._node.data, inputs)
+    const actor = inputs.actor
     if (!actor) {
       return 'return'
     }
-    const result = await actor.method(this._node.data.method, inputs)
+    const fnInputs = {}
+    Object.keys(inputs).forEach(incode => {
+      if (incode === 'call' || incode === 'actor') return
+      fnInputs[incode] = inputs[incode]
+    })
+    const result = await actor.method(this._node.data.method, fnInputs)
     const info = actor.constructor.metadata()
     const minfo = info.methods ? info.methods[this._node.data.method] : null
     if (minfo && result) {

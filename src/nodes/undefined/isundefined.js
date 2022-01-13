@@ -33,7 +33,7 @@ class IsUndefined extends AbstractNode {
   }
 
   async execute(inputs) {
-    this.log('execute', inputs)
+    this.debug('execute', inputs)
     const ret = typeof inputs.any === 'undefined'
     this.setOutput('result', ret)
   }

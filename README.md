@@ -27,6 +27,9 @@ const vm = new Vm()
 // ... loading libraries from database/network/fs/...
 const libraries = loadLibrariesFunction()
 vm.updateLibraries(libraries)
+
+// start vm
+vm.start()
 ```
 
 ## IDE
@@ -138,11 +141,11 @@ vm.addModule(MyModule) // param is class, not object of class
 
 ### Examples
 
-There are 2 modules coming with VM by default: `actor` and `cron` - check this modules source code for deeper examples
+There are 3 modules coming with VM by default: `vm`, `actor` and `cron` - check this modules source code for deeper examples
 
 ## Console
 
-VM use environment `console` object by default, but i can be overriden with `console({ log: Function, error: Function })` VM method
+VM use environment `console` object by default, but i can be overriden with `console({ log: Function, error: Function, debug: Function })` VM method
 
 # Examples
 
@@ -164,9 +167,15 @@ VM is developed together with IDE and next steps are:
  - Libraries import/export
  - Arrays support
  - Type Templates support
- - Classes and OOP support
+ - Classes and OOP support (partially implemented)
 
 # Changelog
+
+## 0.2.2
+
+ - `Vm::start`, `Vm::stop` methods
+ - `Vm` module with `onStart` event
+ - Partial OOP support
 
 ## 0.1.1
 

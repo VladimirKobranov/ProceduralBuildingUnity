@@ -1,5 +1,7 @@
+const dayjs = require('dayjs')
 const AbstractModule = require('./abstract')
 
+const ActorGet = require('./actor/node.get')
 const ActorState = require('./actor/node.state')
 const ActorMethod = require('./actor/node.method')
 
@@ -12,6 +14,7 @@ class ActorModule extends AbstractModule {
     }
   }
 
+  /*
   static ide() {
     return {
       nodes: (libraries, currentLibrary, actors, nodes) => {
@@ -57,6 +60,7 @@ class ActorModule extends AbstractModule {
       }
     }
   }
+  */
 
   constructor(vm) {
     super(vm)
@@ -65,6 +69,7 @@ class ActorModule extends AbstractModule {
     this._actorsEvents = {}
 
     this._vm.registerNode(ActorState)
+    this._vm.registerNode(ActorGet)
     this._vm.registerNode(ActorMethod)
   }
 
@@ -79,13 +84,13 @@ class ActorModule extends AbstractModule {
     this._actors[id] = actor
     this.updateActorsEventsIndex()
     Object.values(info.events || {}).forEach(event => {
-      actor.on(event.event, inputs => {
-        if (this._debug)
-          this.console().log('actor event!', id, event.event, inputs)
-        if (this._actorsEvents[id] && Array.isArray(this._actorsEvents[id][event.event])) {
-          this._actorsEvents[id][event.event].forEach(fn => {
-            if (this._debug)
-              this.console().log('Vm::actorEvent', id, info, event, inputs)
+      actor.on(event.code, inputs => {
+        if (!this._vm.running())
+          return
+        this._vm.console().debug('actor event!', id, event.code, inputs)
+        if (this._actorsEvents[id] && Array.isArray(this._actorsEvents[id][event.code])) {
+          this._actorsEvents[id][event.code].forEach(fn => {
+            this._vm.console().debug('Vm::actorEvent', id, info, event, inputs)
             this._vm.runLibraryFunction('default', fn, inputs)
           })
         }
@@ -97,6 +102,13 @@ class ActorModule extends AbstractModule {
     actor.vm(null)
     const info = actor.constructor.metadata()
     const id = actor.id()
+    if (this._actors[id])
+      this._actors[id].removeAllListeners()
+    /*
+    Object.values(info.events || {}).forEach(event => {
+      this._actors[id].removeAllListeners(event.event)
+    })
+    */
     this._actors[id] = null
     this.updateActorsEventsIndex()
   }

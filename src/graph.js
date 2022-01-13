@@ -8,6 +8,7 @@ class Graph {
     this._vm = vm
     this._outputs = {}
     this._graph = null
+    this._self = null
   }
 
   load(graph) {
@@ -31,6 +32,11 @@ class Graph {
   library(next) {
     if (next) this._graph.library = next
     return this._graph.library
+  }
+
+  self(next) {
+    if (next) this._self = next
+    return this._self
   }
 
   entry(next) {
@@ -68,13 +74,11 @@ class Graph {
 
   async execute(inputs) {
     if (!this._graph) {
-      if (this._vm._debug)
-        this._vm.console().error('no graph!', this)
+      this._vm.console().error('no graph!', this)
       return
     }
-    if (this._vm._debug)
-      this._vm.console().log('Graph::execute', this.name(), inputs)
-    const ctx = new Context(this)
+    this._vm.console().debug('Graph::execute', this.name(), inputs)
+    const ctx = new Context(this, this._self)
     Object.keys(this._graph.context.variables).forEach(vcode => {
       ctx.setOutput('variables', vcode, this._graph.context.variables[vcode].value)
     })
@@ -130,8 +134,7 @@ class Graph {
 
   async executeBranch(nodeFrom, slotFrom, context) {
     const nodeFromInfo = this.getNode(nodeFrom)
-    if (this._vm._debug)
-      this._vm.console().log('Graph::executeBranch', nodeFromInfo.outputs[slotFrom])
+    this._vm.console().debug('Graph::executeBranch', nodeFromInfo.outputs[slotFrom])
     let next = null
     if (!nodeFromInfo.outputs[slotFrom]
         || nodeFromInfo.outputs[slotFrom].type !== 'basic/execute'
