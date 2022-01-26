@@ -20,16 +20,22 @@ Multiple VM instances can be lauched with different configurations independently
 ```
 const { Vm } = require('@bluepjs/vm')
 
-const vm = new Vm()
-// to enable debug
-// const vm = new Vm(true)
+const vm = new Vm(/* debug = false */) // enable debug messages if console outputs are default
+// const vm = new Vm()
 
 // ... loading libraries from database/network/fs/...
 const libraries = loadLibrariesFunction()
 vm.updateLibraries(libraries)
 
+// redefine vm "console" outputs from "console" if required
+vm.console({
+  log: (...args) => { /* log message */ },
+  error: (...args) => { /* error message */ },
+  debug: (...args) => { /* debug message */ },
+})
+
 // start vm
-vm.start()
+vm.start().then(() => { /* start/stop are async */})
 ```
 
 ## IDE
@@ -56,7 +62,7 @@ VM can be runned without Actors, if it's required.
 
 Use `actor` module `addActor`/`removeActor` methods to manage VM actors
 
-Actors should realize `./src/module/actor/abstract` interface. There is no strict checking for classes inheritance, so VM may crash if interface realization is not correct.
+Actors should realize `./src/module/actor/abstract` interface. There is no strict checking for classes inheritance (to keep developers freedom of classes inheritance, cuz js doesn't supprt multi-inheritance), so VM may crash if interface realization is not correct.
 
 For easy integration `AbstractActor` class is expoted by module:
 
@@ -86,13 +92,13 @@ Base Types types are:
  - `basic/datetime` - `dayjs` datetime object
  - `basic/object` - javascript `Object`
  - `basic/template` - currently not implemented
- - `basic/date` - currently not implemented
- - `basic/time` - currently not implemented
+ - `basic/time` - time "object" (part of basic/datetime)
+ - `basic/date` - date "object" (part of basic/datetime)
 
 Additional types
 
  - `bluep/object` - currently not implemented
- - `bluep/class` - currently not implemented
+ - `bluep/class` - base for all `classes` and `actors`
  - `bluep/function` - currently not implemented
  - `bluep/struct` - base for all `structs` types
  - `bluep/enum` - base for all `enums` types
@@ -158,6 +164,7 @@ Check:
 # Documentation (under development)
 
 https://bluepjs.readthedocs.io/en/latest/
+https://bluepjs.takatan.dev
 
 # Roadmap
 
@@ -165,11 +172,34 @@ VM is developed together with IDE and next steps are:
 
  - Multiple libraries support (currentlu only `Default` library content is working)
  - Libraries import/export
- - Arrays support
- - Type Templates support
- - Classes and OOP support (partially implemented)
+
+# Links
+
+ - https://bluepjs.takatan.dev/
+ - https://bluepjs.readthedocs.io/
+ - https://github.com/bluep-js/vm
+ - https://github.com/bluep-js/vue3-ide
 
 # Changelog
+
+## 0.3.4
+
+ - AbstractModule::metadata() for module dynamic metadata
+ - AbstractModule::vm()
+ - AbstractActor::metadata() for actor dynamic metadata
+ - AbstractNode::context()
+ - Node multiple slots
+ - multiple slots for string/append, boolean/and, boolean/or
+ - OOP support, node "cast to"
+ - node "Switch .. case"
+ - node number/plus
+ - types basic/date; basic/time
+ - async Vm::start() / async Vm::stop()
+ - Vm::runModuleEvent(info, inputs) for easy run simple events
+
+## 0.2.3
+
+ - bugfix
 
 ## 0.2.2
 
@@ -180,3 +210,7 @@ VM is developed together with IDE and next steps are:
 ## 0.1.1
 
 Fixed errors on empty libraries
+
+### PR
+
+Please, into `dev` branch

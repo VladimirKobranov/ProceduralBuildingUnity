@@ -38,14 +38,30 @@ class ClassMethod extends AbstractNode {
       if (incode === 'call' || incode === 'of') return
       fnInputs[incode] = inputs[incode]
     })
-    const cls = this.vm().classCombined(this._node.data.class, this._node.data.library)
-    const cn = cls.methods[this._node.data.code] || cls.deep.methods[this._node.data.code]
+    const self = inputs.object
+    // console.log('method self', self)
+    const cls = !!this._node.data.strict
+      ? this.vm().classCombined(this._node.data.class)
+      : this.vm().classCombined(self._metadata.code)
+    // console.log('method', cls.methods, cls.deep)
+    /**/
+    const over = Object.values(cls.methods || {}).find(m => m.overrides === this._node.data.code)
+    const fnCode = !!this._node.data.strict
+      ? this._node.data.code
+      : !!over
+        ? over.code
+        : this._node.data.code
+    /**/
+    const cn = cls.methods[fnCode] || cls.deep.methods[fnCode]
+    if (!cn) {
+      this.error('method not found!', this._node.data.code)
+      return 'return'
+    }
     const outs = await this.vm().runLibraryMethod(inputs.object, cn.library, cn.class, cn.code, fnInputs)
     Object.keys(this._node.outputs).forEach(fcode => {
       if (fcode === 'return') return
       this.setOutput(fcode, outs[fcode])
     })
-    // console.log('method', inputs, outs)
     return 'return'
   }
 

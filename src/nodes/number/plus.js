@@ -1,11 +1,11 @@
 const AbstractNode = require('../abstract')
 
-class BooleanAnd extends AbstractNode {
+class NumberPlus extends AbstractNode {
 
   static metadata() {
     return {
-      name: 'A && B',
-      code: 'boolean/and',
+      name: 'A + B',
+      code: 'number/plus',
       type: 'modifier',
       deleteable: true,
       addable: true,
@@ -13,12 +13,12 @@ class BooleanAnd extends AbstractNode {
         valA: {
           code: 'valA',
           name: 'A',
-          type: 'basic/boolean'
+          type: 'basic/number'
         },
         valB: {
           code: 'valB',
           name: 'B',
-          type: 'basic/boolean',
+          type: 'basic/number',
           multiple: 'A'
         }
       },
@@ -26,23 +26,26 @@ class BooleanAnd extends AbstractNode {
         result: {
           code: 'result',
           name: 'Result',
-          type: 'basic/boolean'
+          type: 'basic/number'
         }
       },
       multiples: {
-        A: { value: 1 }
+        A: {
+          value: 1,
+          min: 1
+        }
       }
     }
   }
 
   async execute(inputs) {
     this.debug('execute', inputs)
-    let ret = !!Object.keys(inputs).length
-    Object.keys(inputs || {}).forEach(inp => {
-      ret = ret && !!inputs[inp]
+    let ret = inputs.valA
+    Object.keys(inputs).forEach(inp => {
+      if (inp.startsWith('valB')) ret += inputs[inp]
     })
     this.setOutput('result', ret)
   }
 }
 
-module.exports = BooleanAnd
+module.exports = NumberPlus

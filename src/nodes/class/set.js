@@ -1,4 +1,5 @@
 const AbstractNode = require('../abstract')
+const AbstractActor = require('../../module/actor/abstract')
 
 class ClassVariableSet extends AbstractNode {
 
@@ -33,8 +34,17 @@ class ClassVariableSet extends AbstractNode {
 
   async execute(inputs) {
     this.debug('execute', this._node.code, inputs)
-    if (!inputs.object) return 'return'
-    inputs.object[this._node.data.code] = inputs[this._node.data.code]
+    if (this._node.data.context === 'schema') {
+      if (!inputs.object) return 'return'
+      // actors states are working save as class properies
+      if (inputs.object instanceof AbstractActor) {
+        inputs.object._state[this._node.data.code] = inputs[this._node.data.code]
+      } else {
+        inputs.object[this._node.data.code] = inputs[this._node.data.code]
+      }
+    } else {
+      this._context.setOutput(this._node.data.context, this._node.data.code, inputs[this._node.data.code])
+    }
     return 'return'
   }
 }

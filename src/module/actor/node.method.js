@@ -43,7 +43,7 @@ class ActorMethod extends AbstractNode {
       fnInputs[incode] = inputs[incode]
     })
     const result = await actor.method(this._node.data.method, fnInputs)
-    const info = actor.constructor.metadata()
+    const info = actor.metadata()
     const minfo = info.methods ? info.methods[this._node.data.method] : null
     if (minfo && result) {
       Object.keys(minfo.outputs || {}).forEach(key => {

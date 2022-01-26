@@ -25,6 +25,16 @@ const BaseTypes = {
     code: 'basic/boolean',
     color: '#F66'
   },
+  'basic/time': {
+    name: 'Time',
+    code: 'basic/time',
+    color: '#f6c'
+  },
+  'basic/date': {
+    name: 'Date',
+    code: 'basic/date',
+    color: '#f5b'
+  },
   'basic/datetime': {
     name: 'Date and Time',
     code: 'basic/datetime',

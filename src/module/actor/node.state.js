@@ -33,12 +33,11 @@ class ActorState extends AbstractNode {
 
   async execute(inputs) {
     this.debug('execute', this._node.data.actor)
-    // const actor = this.vm().M('actor').actor(this._node.data.actor)
     const actor = inputs.actor
     if (!actor) {
       return 'return'
     }
-    const states = actor.state()
+    const states = actor.state() || {}
     Object.keys(states).forEach(key => {
       this.setOutput(key, states[key])
     })

@@ -9,6 +9,8 @@ class AbstractNode {
     return this._graph._vm
   }
 
+  context() { return this._context }
+
   static metadata() {
     return {
       name: '',

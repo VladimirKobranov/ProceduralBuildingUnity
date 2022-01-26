@@ -1,4 +1,6 @@
-class AbstractModule {
+const EventEmitter = require('events')
+
+class AbstractModule extends EventEmitter {
 
   static metadata() {
     return {
@@ -7,9 +9,16 @@ class AbstractModule {
     }
   }
 
+  metadata() {
+    return this.constructor.metadata()
+  }
+
   constructor(vm) {
+    super()
     this._vm = vm
   }
+
+  vm() { return this._vm }
 
   async start () {}
   async stop () {}
