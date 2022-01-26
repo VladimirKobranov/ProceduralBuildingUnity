@@ -48,9 +48,9 @@ class New extends AbstractNode {
       fnInputs[incode] = inputs[incode]
     })
     const obj = {}
-    const cls = this.vm().classCombined(this._node.data.class, this._node.data.library)
+    const cls = this.vm().classCombined(this._node.data.class)
     // console.log('new::clsCombined', cls)
-    obj._metainfo = cls
+    obj._metadata = cls
     Object.keys(cls.schema || {}).forEach(fcode => {
       obj[fcode] = cls.schema[fcode].value
     })

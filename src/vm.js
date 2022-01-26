@@ -70,7 +70,11 @@ class Vm {
       return {}
     return Object.values(this.M('actor').actors())
       .filter(x => !!x)
-      .map(a => a.metadata())
+      .map(a => {
+        const ret = a.metadata()
+        ret._metadata = a.constructor.metadata()
+        return ret
+      })
       .filter(a => !a.internal)
       .reduce((acc,a) => { acc[a.id] = a; return acc }, {})
   }
@@ -96,17 +100,17 @@ class Vm {
   /**
    *  VM start method
    */
-  start () {
+  async start () {
     this._run = true
-    Object.values(this._modules).forEach(m => m.start())
+    await Promise.all(Object.values(this._modules).map(m => m.start()))
   }
 
   /**
    *  VM stop method
    */
-  stop () {
+  async stop () {
     this._run = false
-    Object.values(this._modules).forEach(m => m.stop())
+    await Promise.all(Object.values(this._modules).map(m => m.stop()))
   }
   // /RUN
 
@@ -191,7 +195,8 @@ class Vm {
   modules() {
     return Object.values(this._modules)
       .map(m => {
-        const info = m.constructor.metadata() 
+        const info = m.metadata() 
+        info._metafata = m.constructor.metadata()
         // const ide = m.constructor.ide()
         // if (!Object.keys(ide || {}).length)
         return info
@@ -279,9 +284,9 @@ class Vm {
    */
   async runLibraryConstructor(self, lib, cls, fn, inputs) {
     if (!this._run || !this._libraries || !this._libraries[lib] || !this._libraries[lib].classes) return
-    this.console().debug('Vm::class::constructor', self, lib, cls, fn, inputs)
-    // console.log('Vm::class::constructor', self, lib, cls, fn, inputs)
-    const graph = this._libraries[lib].classes[cls].methods[fn]
+    this.console().debug('Vm::class::constructor', lib, cls, fn, inputs)
+    // cloning, because we modifying context inputs with "this"
+    const graph = JSON.parse(JSON.stringify(this._libraries[lib].classes[cls].methods[fn]))
     const bp = new Graph(this)
     bp.self(self)
     bp.load(graph)
@@ -301,8 +306,9 @@ class Vm {
    */
   async runLibraryMethod(self, lib, cls, fn, inputs) {
     if (!this._run || !this._libraries || !this._libraries[lib] || !this._libraries[lib].classes || !this._libraries[lib].classes[cls] || !this._libraries[lib].classes[cls].methods[fn]) return
-    this.console().debug('Vm::class::method', self, lib, cls, fn, inputs)
-    const graph = this._libraries[lib].classes[cls].methods[fn]
+    this.console().debug('Vm::class::method', lib, cls, fn, inputs)
+    // cloning, because we modifying context inputs with "this"
+    const graph = JSON.parse(JSON.stringify(this._libraries[lib].classes[cls].methods[fn]))
     const bp = new Graph(this)
     bp.self(self)
     bp.load(graph)
@@ -311,14 +317,51 @@ class Vm {
     return bp.getResult()
   }
 
+
+  /**
+   *  Simple run module event function (without configurstion) from library by info object. Uses ``runLibraryFunction`` method. Can be used (when event configuration not exists or doesn't matter) as simple way to trigger event in modules.
+   *  @async
+   *  @param {Object} info - information to run:
+   *  @param {string} [info.library = 'default'] - library code where event functions located
+   *  @param {string} info.module - module code
+   *  @param {string} info.event - module event code
+   *  @param {Object} inputs - function inputs (event outputs)
+   */
+  async runModuleEvent(info, inputs) {
+    const lib = info.library || 'default'
+    if (!this._run || !this._libraries || !this._libraries[lib]) return
+    const fns = Object.values(this._libraries[lib].functions).filter(f => f.event && f.event.module === info.module && f.event.code === info.event)
+    fns.forEach(fn => {
+      this.runLibraryFunction(lib, fn.code, inputs)
+    })
+  }
+
+  ////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////
+
+  //                   UTILS
+
+  ////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////
+
+  classLibrary (code) {
+    let lib = null
+    Object.keys(this._libraries).forEach(l => {
+      if (this._libraries[l].classes && Object.keys(this._libraries[l].classes).includes(code)) lib = l
+    })
+    return lib
+  }
+
   /**
    *  Class parents classes
    *  @param {string} classCode - class code
    *  @param {string} library - class library
    *  @returns {object} class parents. direct and deep extended.
    */
-   classParents (classCode, library) {
+   classParents (classCode) {
     const ret = { direct: [], back: [] }
+    const library = this.classLibrary(classCode)
+    if (!library) return ret
     const cls = this._libraries[library].classes[classCode]
     if (!cls || !Object.keys(cls.extends || {}).length) return ret
     const modules = this.modules()
@@ -329,7 +372,7 @@ class Vm {
       }
       if (inf.library) {
         inf.src = this._libraries[inf.library].classes[inf.code]
-        const parents = this.classParents(inf.code, inf.library)
+        const parents = this.classParents(inf.code)
         ret.back = [...ret.back, ...parents.direct, ...parents.back]
       }
       ret.direct.push(inf)
@@ -352,11 +395,8 @@ class Vm {
    */
   /**/
   classCombined (clsCode) {
-    let lib = null
-    Object.keys(this._libraries).forEach(l => {
-      if (this._libraries[l].classes && Object.keys(this._libraries[l].classes).includes(clsCode)) lib = l
-    })
-    if (!lib || !this._libraries[lib].classes[clsCode]) return null
+    const lib = this.classLibrary(clsCode)
+    if (!lib) return null
     const cls = jclone(this._libraries[lib].classes[clsCode])
     const parents = this.classParents(clsCode, lib)
     const list = [...parents.direct, ...parents.back]

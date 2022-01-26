@@ -8,12 +8,14 @@ const Wait = require('./execute/wait')
 const Constructor = require('./class/constructor')
 const This = require('./class/this')
 const New = require('./class/new')
+const ClassCastTo = require('./class/castto')
 const ClassMethod = require('./class/method')
 const ClassVariableGet = require('./class/get')
 const ClassVariableSet = require('./class/set')
 
-const For = require('./branches/for')
 const If = require('./branches/if')
+const Switch = require('./branches/switch')
+const For = require('./branches/for')
 const Each = require('./branches/each')
 
 const VariableGet = require('./variable/get')
@@ -28,6 +30,7 @@ const StructToObject = require('./struct/toobject')
 const StructFromObject = require('./struct/fromobject')
 
 const NumberEq = require('./number/eq')
+const NumberPlus = require('./number/plus')
 const NumberToString = require('./number/number2string')
 const NumberIsEven = require('./number/iseven')
 const NumberIsGreater = require('./number/gt')
@@ -57,6 +60,7 @@ const Nodes = {
   This,
   New,
   Constructor,
+  ClassCastTo,
   ClassMethod,
   ClassVariableGet,
   ClassVariableSet,
@@ -74,8 +78,9 @@ const Nodes = {
   StructToObject,
   StructFromObject,
 
-  For,
   If,
+  Switch,
+  For,
   Each,
 
   BooleanAnd,
@@ -84,6 +89,7 @@ const Nodes = {
   BooleanEq,
 
   NumberEq,
+  NumberPlus,
   NumberToString,
   NumberIsEven,
   NumberIsGreater,
