@@ -1,5 +1,4 @@
 const AbstractNode = require('../abstract')
-const AbstractActor = require('../../module/actor/abstract')
 
 class ClassVariableGet extends AbstractNode {
 
@@ -27,7 +26,8 @@ class ClassVariableGet extends AbstractNode {
     if (this._node.data.context === 'schema') {
       if (!inputs.object) return
       // actors states are working save as class properies
-      const ret = inputs.object instanceof AbstractActor
+      // check actor 'interface' like this, because Actors may not directly extends AbstractActor
+      const ret = typeof inputs.object.state === 'function' && typeof inputs.object.metadata === 'function' && typeof inputs.object.constructor.metadata === 'function'
         ? inputs.object.state(this._node.data.code)
         : inputs.object[this._node.data.code]
       this.setOutput(this._node.data.code, ret)

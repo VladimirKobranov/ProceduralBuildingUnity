@@ -34,6 +34,7 @@ class AbstractActor extends EventEmitter {
     super()
     this._id = id || uuid()
     this._vm = null
+    this._state = {}
   }
 
   // get/set id
@@ -51,7 +52,10 @@ class AbstractActor extends EventEmitter {
   }
 
   // return full state object or only filed by code, if code if defined
-  state(code) {}
+  state(code) {
+    if (code) return this._state[code]
+    return this._state
+  }
 
   // calls method 
   async method(method, inputs) {
