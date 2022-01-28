@@ -10,57 +10,10 @@ class ActorModule extends AbstractModule {
   static metadata() {
     return {
       code: 'actor',
-      name: 'Actor'
+      name: 'Actor',
+      classes: {}
     }
   }
-
-  /*
-  static ide() {
-    return {
-      nodes: (libraries, currentLibrary, actors, nodes) => {
-        const ret = []
-        // console.log('nodes', {libraries, currentLibrary, actors, nodes})
-        const actorState = nodes.find(node => node.code === 'actor/state')
-        const actorMethod = nodes.find(node => node.code === 'actor/method')
-        Object.values(actors || {}).forEach(actor => {
-          const nodeState = JSON.parse(JSON.stringify(actorState))
-          nodeState.addable = true
-          nodeState.code += `/${actor.id}/state`
-          nodeState.name = actor.name + ' state'
-          nodeState.data = {
-            actor: actor.id
-          }
-          Object.keys(actor.state).forEach(field => {
-            nodeState.outputs[field] = JSON.parse(JSON.stringify(actor.state[field]))
-          })
-          ret.push(nodeState)
-
-          Object.values(actor.methods || {}).forEach(method => {
-            const nodeMethod = JSON.parse(JSON.stringify(actorMethod))
-            nodeMethod.addable = true
-            nodeMethod.code += `/${actor.id}/method/${method.code}`
-            nodeMethod.name = actor.name + ' :: ' + method.name + '()'
-            nodeMethod.data = {
-              actor: actor.id,
-              method: method.code
-            }
-            Object.keys(method.inputs || {}).forEach(field => {
-              nodeMethod.inputs[field] = JSON.parse(JSON.stringify(method.inputs[field]))
-            })
-            Object.keys(method.outputs || {}).forEach(field => {
-              nodeMethod.outputs[field] = JSON.parse(JSON.stringify(method.outputs[field]))
-            })
-            ret.push(nodeMethod)
-          })
-        })
-        return ret
-      // },
-      // types: (libraries, currentLibrary, actors, types) => {
-        // console.log('types', {libraries, currentLibrary, actors, types})
-      }
-    }
-  }
-  */
 
   constructor(vm) {
     super(vm)

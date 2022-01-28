@@ -39,11 +39,23 @@ class ClassMethod extends AbstractNode {
       fnInputs[incode] = inputs[incode]
     })
     const self = inputs.object
-    // console.log('method self', self)
+    if (typeof self.constructor.metadata === 'function' && typeof self.method === 'function') {
+      // has static metadata method.
+      // can't be object of class fully described by blueprints
+      // and should be an actor
+      // cuz also has 'method' method.
+      // call it directly
+      const outs = await self.method(this._node.data.code, fnInputs)
+      Object.keys(this._node.outputs).forEach(fcode => {
+        if (fcode === 'return') return
+        this.setOutput(fcode, outs[fcode])
+      })
+      return 'return'
+    }
+    
     const cls = !!this._node.data.strict
       ? this.vm().classCombined(this._node.data.class)
-      : this.vm().classCombined(self._metadata.code)
-    // console.log('method', cls.methods, cls.deep)
+      : this.vm().classCombined((self._metadata || {}).code)
     /**/
     const over = Object.values(cls.methods || {}).find(m => m.overrides === this._node.data.code)
     const fnCode = !!this._node.data.strict

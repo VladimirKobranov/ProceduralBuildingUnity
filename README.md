@@ -182,6 +182,11 @@ VM is developed together with IDE and next steps are:
 
 # Changelog
 
+## 0.3.5
+
+ - `AbstractActor._state = {}` on construction and default `state(code)` method
+ - `node/class/method`, `node/class/get` fixes
+
 ## 0.3.4
 
  - AbstractModule::metadata() for module dynamic metadata
