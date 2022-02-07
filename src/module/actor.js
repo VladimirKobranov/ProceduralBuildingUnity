@@ -20,6 +20,7 @@ class ActorModule extends AbstractModule {
 
     this._actors = {}
     this._actorsEvents = {}
+    this._subsIndex = []
 
     this._vm.registerNode(ActorState)
     this._vm.registerNode(ActorGet)
@@ -27,41 +28,22 @@ class ActorModule extends AbstractModule {
   }
 
   libraryUpdate () {
-    this.updateActorsEventsIndex()
+    this.updateActorsEventsIndex(true)
   }
 
   addActor(actor) {
     actor.vm(this._vm)
-    const info = actor.constructor.metadata()
-    const id = actor.id()
-    this._actors[id] = actor
+    this._actors[actor.id()] = actor
     this.updateActorsEventsIndex()
-    Object.values(info.events || {}).forEach(event => {
-      actor.on(event.code, inputs => {
-        if (!this._vm.running())
-          return
-        this._vm.console().debug('actor event!', id, event.code, inputs)
-        if (this._actorsEvents[id] && Array.isArray(this._actorsEvents[id][event.code])) {
-          this._actorsEvents[id][event.code].forEach(fn => {
-            this._vm.console().debug('Vm::actorEvent', id, info, event, inputs)
-            this._vm.runLibraryFunction('default', fn, inputs)
-          })
-        }
-      })
-    })
   }
 
   removeActor(actor) {
     actor.vm(null)
-    const info = actor.constructor.metadata()
     const id = actor.id()
-    if (this._actors[id])
+    if (this._actors[id]) {
       this._actors[id].removeAllListeners()
-    /*
-    Object.values(info.events || {}).forEach(event => {
-      this._actors[id].removeAllListeners(event.event)
-    })
-    */
+      this._subsIndex = this._subsIndex.filter(x => !x.startsWith(`${id}/`))
+    }
     this._actors[id] = null
     this.updateActorsEventsIndex()
   }
@@ -74,19 +56,39 @@ class ActorModule extends AbstractModule {
     return this._actors[id]
   }
 
-  updateActorsEventsIndex() {
-    this._actorsEvents = {}
-    const libs = this._vm.libraries()
-    if (!libs || !libs.default || !libs.default.functions)
-      return
-    Object.values(libs.default.functions || {}).forEach(fn => {
-      if (!fn.event || !fn.event.actor || !this._actors[fn.event.actor])
+  updateActorsEventsIndex(libUpdate = false) {
+    if (libUpdate) {
+      this._actorsEvents = {}
+      const libs = this._vm.libraries()
+      if (!libs || !libs.default || !libs.default.functions)
         return
-      if (!this._actorsEvents[fn.event.actor])
-        this._actorsEvents[fn.event.actor] = {}
-      if (!this._actorsEvents[fn.event.actor][fn.event.code])
-        this._actorsEvents[fn.event.actor][fn.event.code] = []
-      this._actorsEvents[fn.event.actor][fn.event.code].push(fn.code)
+      Object.values(libs.default.functions || {}).forEach(fn => {
+        if (!fn.event || !fn.event.actor)
+          return
+        if (!this._actorsEvents[fn.event.actor])
+          this._actorsEvents[fn.event.actor] = {}
+        if (!this._actorsEvents[fn.event.actor][fn.event.code])
+          this._actorsEvents[fn.event.actor][fn.event.code] = []
+        this._actorsEvents[fn.event.actor][fn.event.code].push(fn.code)
+      })
+    }
+    Object.keys(this._actorsEvents || {}).forEach(aid => {
+      if (!this._actors[aid]) return
+      Object.keys(this._actorsEvents[aid] || {}).forEach(eventCode => {
+        if (this._subsIndex.includes(`${aid}/${eventCode}`)) return
+        this._subsIndex.push(`${aid}/${eventCode}`)
+        this._actors[aid].on(eventCode, inputs => {
+          if (!this._vm.running())
+            return
+          this._vm.console().debug('actor event!', { aid, eventCode, inputs })
+          if (this._actorsEvents[aid] && Array.isArray(this._actorsEvents[aid][eventCode])) {
+            this._actorsEvents[aid][eventCode].forEach(fn => {
+              this._vm.console().debug('Vm::actorEvent', aid, eventCode, fn, inputs)
+              this._vm.runLibraryFunction('default', fn, inputs)
+            })
+          }
+        })
+      })
     })
   }
 

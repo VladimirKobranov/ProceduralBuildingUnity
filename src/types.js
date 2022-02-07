@@ -25,6 +25,11 @@ const BaseTypes = {
     code: 'basic/boolean',
     color: '#F66'
   },
+  'basic/color': {
+    name: 'Color',
+    code: 'basic/color',
+    color: '#057a08'
+  },
   'basic/time': {
     name: 'Time',
     code: 'basic/time',
@@ -51,6 +56,11 @@ const BaseTypes = {
     color: '#FF6'
   },
   // blueprints
+  'bluep/actor': {
+    name: 'Engine Actor',
+    code: 'bluep/actor',
+    color: '#a7a'
+  },
   'bluep/object': {
     name: 'Blueprint Object',
     code: 'bluep/object',

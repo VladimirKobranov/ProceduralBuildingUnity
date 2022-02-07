@@ -16,7 +16,8 @@ class ConsoleLog extends AbstractNode {
         message: {
           code: 'message',
           name: 'Message',
-          type: 'basic/string'
+          type: 'basic/string',
+          multiple: 'message'
         }
       },
       outputs: {
@@ -25,13 +26,20 @@ class ConsoleLog extends AbstractNode {
           name: 'Return',
           type: 'basic/execute'
         }
+      },
+      multiples: {
+        'message': { value: 1 }
       }
     }
   }
 
   async execute(inputs) {
     this.debug('execute', inputs)
-    this.vm().console().log(inputs.message)
+    let msg = ''
+    Object.keys(inputs || {}).forEach(key => {
+      if (key.startsWith('message')) msg += inputs[key]
+    })
+    this.vm().console().log(msg)
     return 'return'
   }
 

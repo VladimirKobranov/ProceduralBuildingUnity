@@ -122,9 +122,82 @@ const classCombined = (code, library, libraries, modules) => {
   return cls
 }
 
+const actorParents = (src, actors, modules, sourced = false) => {
+  const act = src.id
+    ? actors[src.id]
+    : modules[src.module].classes[src.code]
+  const parents = []
+  const index = []
+  if (!act) return parents
+  Object.values(act.extends || {}).forEach(ext => {
+    const prnt = modules[ext.module].classes[ext.code]
+    if (index.includes(`${ext.module}/${ext.code}`)) return
+    index.push(`${ext.module}/${ext.code}`)
+    parents.push({ ...prnt, module: ext.module })
+    const prntParents = actorParents(ext, actors, modules)
+    prntParents.forEach(pp => {
+      if (index.includes(`${pp.module}/${pp.code}`)) return
+      index.push(`${pp.module}/${pp.code}`)
+      parents.push(pp)
+    })
+  })
+  return parents
+}
+
+const actorCombined = (aid, actors, modules, sourced = false) => {
+  if (!actors || !modules || !actors[aid]) return null
+  const act = actors[aid]
+  if (!act) return null
+  // const ret = actors[aid]
+  const info = jclone(act)
+  const parents = actorParents({ id: aid }, actors, modules, sourced)
+  parents.forEach(prnt => {
+    const pSchema = Object.keys(prnt.schema || {}).reduce((acc, key) => {
+      acc[key] = {
+        ...prnt.schema[key],
+        src: {
+          module: prnt.module,
+          code: prnt.code
+        }
+      }
+      return acc
+    }, {})
+    const iSchema = info.schema || {}
+    info.schema = { ...iSchema, ...pSchema }
+    const pMethods = Object.keys(prnt.methods || {}).reduce((acc, key) => {
+      acc[key] = {
+        ...prnt.methods[key],
+        src: {
+          module: prnt.module,
+          code: prnt.code
+        }
+      }
+      return acc
+    }, {})
+    const iMethods = info.methods || {}
+    info.methods = { ...iMethods, ...pMethods }
+    const pEvents = Object.keys(prnt.events || {}).reduce((acc, key) => {
+      acc[key] = {
+        ...prnt.events[key],
+        src: {
+          module: prnt.module,
+          code: prnt.code
+        }
+      }
+      return acc
+    }, {})
+    const iEvents = info.events || {}
+    info.events = { ...iEvents, ...pEvents }
+  })
+  info._parents = parents
+  return info
+}
+
 module.exports = {
   jclone,
   classParents,
   classIsParentOf,
-  classCombined
+  classCombined,
+  actorParents,
+  actorCombined
 }
