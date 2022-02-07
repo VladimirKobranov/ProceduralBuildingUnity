@@ -91,13 +91,14 @@ Base Types types are:
  - `basic/float` - floats
  - `basic/datetime` - `dayjs` datetime object
  - `basic/object` - javascript `Object`
- - `basic/template` - currently not implemented
+ - `basic/template` - template field (TMP https://en.wikipedia.org/wiki/Template_metaprogramming)
  - `basic/time` - time "object" (part of basic/datetime)
  - `basic/date` - date "object" (part of basic/datetime)
 
 Additional types
 
  - `bluep/object` - currently not implemented
+ - `bluep/actor` - currently not implemented
  - `bluep/class` - base for all `classes` and `actors`
  - `bluep/function` - currently not implemented
  - `bluep/struct` - base for all `structs` types
@@ -147,7 +148,7 @@ vm.addModule(MyModule) // param is class, not object of class
 
 ### Examples
 
-There are 3 modules coming with VM by default: `vm`, `actor` and `cron` - check this modules source code for deeper examples
+There are 3 modules coming with VM by default: `core`, `actor` and `cron` - check this modules source code for deeper examples (https://github.com/bluep-js/vm/tree/master/src/module)
 
 ## Console
 
@@ -157,13 +158,11 @@ VM use environment `console` object by default, but i can be overriden with `con
 
 Check:
 
- - `./src/module/cron.js`
- - `./src/module/actor.js`
+ - https://github.com/bluep-js/vm/tree/master/src/module
  - https://github.com/bluep-js/example
 
 # Documentation (under development)
 
-https://bluepjs.readthedocs.io/en/latest/
 https://bluepjs.takatan.dev
 
 # Roadmap
@@ -181,6 +180,16 @@ VM is developed together with IDE and next steps are:
  - https://github.com/bluep-js/vue3-ide
 
 # Changelog
+
+## 0.3.6
+
+ - basic/color type
+ - bluep/actor type
+ - Utils exports
+ - actors module actors events listener optimized
+ - console.log node now apply multiple strings input
+ - Utils.actorParents function (fp style)
+ - Utils.actorCombined function (fp style)
 
 ## 0.3.5
 

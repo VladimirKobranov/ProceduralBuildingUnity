@@ -1,6 +1,6 @@
 {
   "name": "@bluepjs/vm",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "description": "Virtual Machine for @bluepjs blueprints execution",
   "main": "./src/index.js",
   "scripts": {
@@ -9,9 +9,14 @@
   "files": [
     "src/*"
   ],
-  "keywords": ["bluepjs","virtual machine","blueprint","vm"],
+  "keywords": [
+    "bluepjs",
+    "virtual machine",
+    "blueprint",
+    "vm"
+  ],
   "author": "Evgeny Trifonov <abrakadobr@gmail.com>",
-  "homepage": "https://github.com/bluep-js/vm#readme",
+  "homepage": "https://bluepjs.takatan.dev",
   "repository": {
     "type": "git",
     "url": "https://github.com/bluep-js/vm"
@@ -21,6 +26,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "colord": "^2.9.2",
     "cron-parser": "^4.2.0",
     "dayjs": "^1.10.7",
     "uuid": "^8.3.2"
