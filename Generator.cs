@@ -24,6 +24,8 @@ public class Generator : MonoBehaviour
     public int randomSeed;
     //brandmauer
     public bool brandmauer;
+    //stairs
+    public int stairsLocation;
 
     private double upGroundValue;
 
@@ -52,6 +54,8 @@ public class Generator : MonoBehaviour
     public GameObject[] wallAccessories;
     public GameObject[] roofAccessories;
     public GameObject[] firstFloorAccessories;
+    // stairs arrays 0-first floor, 1-main,2-last
+    public GameObject[] stairsObjects;
 
     public void Awake()
     {
@@ -215,6 +219,24 @@ public class Generator : MonoBehaviour
                             Instantiate(wallObjects[Random.Range(0, wallObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(0 - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
                             //back
                             Instantiate(wallObjects[Random.Range(0, wallObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(zTile * zNumberWidth - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0)));
+
+                            //stairs main facade
+                            if(i*xTile > 0 && i*xTile <xNumberLenght && i*xTile == stairsLocation)
+                            {
+                                 if(j*yTile == 1) //first floor stairs
+                                {
+                                    Instantiate(stairsObjects[0], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(0 - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
+                                }
+                                else if( j*yTile == yNumberHeight-2)//last floor stairs
+                                {
+                                    Instantiate(stairsObjects[2], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(0 - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
+                                }
+                                else //main stairs
+                                {
+                                    Instantiate(stairsObjects[1], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(0 - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
+                                }
+                            }
+
 
                             if (Random.value < wallAccessoriesPercentage)  // wall accessories with percentage
                             {
