@@ -10,8 +10,11 @@ public class Generator : MonoBehaviour
     private readonly int xTile = 1;
     private readonly int yTile = 1;
     private readonly int zTile = 1;
+    [Min(0)]
     public int xNumberLenght;
+    [Min(0)]
     public int yNumberHeight;
+    [Min(0)]
     public int zNumberWidth;
     //half tiles 
     private double xTileHalf;
@@ -26,6 +29,7 @@ public class Generator : MonoBehaviour
     public bool brandmauer;
     //stairs
     public bool stairs;
+    [Min(1)]
     public int stairsPosition;
     public bool randomStairsPosition;
 
