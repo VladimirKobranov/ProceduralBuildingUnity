@@ -25,7 +25,14 @@ public class Generator : MonoBehaviour
     //brandmauer
     public bool brandmauer;
     //stairs
-    public int stairsLocation;
+    public bool stairs;
+    public int stairsPosition;
+    public bool randomStairsPosition;
+
+    // Define possible states for enemy using an enum 
+    public enum facadeSideStairsSelector { Front, Back, Left, Right };
+    // The current state of stairs enum
+    public facadeSideStairsSelector StairsSelectedFacade = facadeSideStairsSelector.Front;
 
     private double upGroundValue;
 
@@ -88,9 +95,150 @@ public class Generator : MonoBehaviour
         // half tiles for centering
         xTileHalf = (float)(xTile * xNumberLenght) / 2;
         zTileHalf = (float)(zTile * zNumberWidth) / 2;
+
+        //set random value for stairs if bool is true
+        if(randomStairsPosition == true)
+        {
+            if(StairsSelectedFacade == facadeSideStairsSelector.Front || StairsSelectedFacade == facadeSideStairsSelector.Back)
+            {
+                stairsPosition = Random.Range(1, xNumberLenght - 1);
+            }
+            else
+            {
+                stairsPosition = Random.Range(1, zNumberWidth - 1);
+            }
+            
+        }
     }
-    void Start()
+
+    public void facadeStairs()
     {
+        if(stairs== true) // checks stairs bool
+        {
+            //switch on stairs enum
+            switch (StairsSelectedFacade)
+            {
+                case facadeSideStairsSelector.Front:
+                    for (var i = 0; i < xNumberLenght + 1; i++) //front & back facade
+                    {
+                        for (var j = 0; j < yNumberHeight; j++)
+                        {
+
+                            //stairs main facade
+                            if (i * xTile > 0 && i * xTile < xNumberLenght && i * xTile == stairsPosition)
+                            {
+                                if (j * yTile == 1) //first floor stairs
+                                {
+                                    Instantiate(stairsObjects[0], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(0 - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
+                                }
+                                else if (j * yTile == yNumberHeight - 1)//last floor stairs
+                                {
+                                    Instantiate(stairsObjects[2], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(0 - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
+                                }
+                                else if (j * yTile != yNumberHeight - 1 && j * yTile != 0)//main stairs
+                                {
+                                    Instantiate(stairsObjects[1], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(0 - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
+                                }
+                            }
+                        }
+                    }
+                    Debug.Log("Stairs position: Front");
+                    break;
+                case facadeSideStairsSelector.Back:
+                    for (var i = 0; i < xNumberLenght + 1; i++) //front & back facade
+                    {
+                        for (var j = 0; j < yNumberHeight; j++)
+                        {
+                            //stairs main facade
+                            if (i * xTile > 0 && i * xTile < xNumberLenght && i * xTile == stairsPosition)
+                            {
+                                if (j * yTile == 1) //first floor stairs
+                                {
+                                    Instantiate(stairsObjects[0], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(zTile * zNumberWidth - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0)));
+                                }
+                                else if (j * yTile == yNumberHeight - 1)//last floor stairs
+                                {
+                                    Instantiate(stairsObjects[2], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(zTile * zNumberWidth - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0)));
+                                }
+                                else if (j * yTile != yNumberHeight - 1 && j * yTile != 0)//main stairs
+                                {
+                                    Instantiate(stairsObjects[1], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(zTile * zNumberWidth - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0)));
+                                }
+                            }
+                        }
+                    }
+                    Debug.Log("Stairs position: Back");
+                    break;
+                case facadeSideStairsSelector.Left:
+
+                    for (var i = 0; i < zNumberWidth; i++) // left facade　
+                    {
+                        for (int j = 0; j < yNumberHeight; j++)
+                        {
+
+                            if (i * zTile == stairsPosition && brandmauer == false)
+                            {
+                                // left
+
+
+                                if (j * yTile == 1) //first floor stairs
+                                {
+                                    Instantiate(stairsObjects[0], new Vector3((float)(0 - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
+                                }
+                                else if (j * yTile == yNumberHeight - 1)//last floor stairs
+                                {
+                                    Instantiate(stairsObjects[2], new Vector3((float)(0 - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
+                                }
+                                else if (j * yTile != yNumberHeight - 1 && j * yTile != 0)//main stairs
+                                {
+                                    Instantiate(stairsObjects[1], new Vector3((float)(0 - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
+                                }
+
+
+                                //right
+                                // Instantiate(stairsObjects[0], new Vector3((float)(xTile * xNumberLenght - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.identity);
+                            }
+                        }
+                    }
+
+                    Debug.Log("Stairs position: Left");
+                    break;
+                case facadeSideStairsSelector.Right:
+
+                    for (var i = 0; i < zNumberWidth; i++) // right facade　
+                    {
+                        for (int j = 0; j < yNumberHeight; j++)
+                        {
+
+                            if (i * zTile == stairsPosition && brandmauer == false)
+                            {
+                                // left
+
+
+                                if (j * yTile == 1) //first floor stairs
+                                {
+                                    Instantiate(stairsObjects[0], new Vector3((float)(xTile * xNumberLenght - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+                                }
+                                else if (j * yTile == yNumberHeight - 1)//last floor stairs
+                                {
+                                    Instantiate(stairsObjects[2], new Vector3((float)(xTile * xNumberLenght - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 0, 0))); ;
+                                }
+                                else if (j * yTile != yNumberHeight - 1 && j * yTile != 0)//main stairs
+                                {
+                                    Instantiate(stairsObjects[1], new Vector3((float)(xTile * xNumberLenght - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+                                }
+                            }
+                        }
+                    }
+                    Debug.Log("Stairs position: Right");
+                    break;
+            }
+        }
+
+    }
+
+    public void makeBuilding()
+    {   
         if (usePickedObjectPosition == true) //set initial position from picked object
         {
             pickedObjectPosition.position = pickedObjectPosition.position;
@@ -213,6 +361,7 @@ public class Generator : MonoBehaviour
                                 }
                             }
                         }
+
                         else // main walls
                         {
                             //front
@@ -220,25 +369,8 @@ public class Generator : MonoBehaviour
                             //back
                             Instantiate(wallObjects[Random.Range(0, wallObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(zTile * zNumberWidth - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0)));
 
-                            //stairs main facade
-                            if(i*xTile > 0 && i*xTile <xNumberLenght && i*xTile == stairsLocation)
-                            {
-                                 if(j*yTile == 1) //first floor stairs
-                                {
-                                    Instantiate(stairsObjects[0], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(0 - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
-                                }
-                                else if( j*yTile == yNumberHeight-2)//last floor stairs
-                                {
-                                    Instantiate(stairsObjects[2], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(0 - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
-                                }
-                                else //main stairs
-                                {
-                                    Instantiate(stairsObjects[1], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(0 - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
-                                }
-                            }
-
-
-                            if (Random.value < wallAccessoriesPercentage)  // wall accessories with percentage
+                        }
+                            if (Random.value < wallAccessoriesPercentage && i*xTile !=0 && i*xTile != xNumberLenght)  // wall accessories with percentage
                             {
                                 //spawn
                                 //front Accessories
@@ -250,187 +382,194 @@ public class Generator : MonoBehaviour
                             {
                                 //null
                             }
-                        }
                     }
                 }
             }
-            for (var i = 0; i < zNumberWidth; i++) // left && right facade　
-            {
-                for (int j = 0; j < yNumberHeight - 1; j++)
-                {
-                    if (i * zNumberWidth == 0) // removes first elements
-                    {
-                        //nothing
-                    }
-                    else
-                    {
-                        if (j * yTile == 0) // first floor
-                        {
-                            if (brandmauer == true) // checks brandmauer bool
-                            {
-                                // left
-                                Instantiate(wallBrandmauer[Random.Range(0, wallBrandmauer.Length)], new Vector3((float)(0 - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
-                                //right
-                                Instantiate(wallBrandmauer[Random.Range(0, wallBrandmauer.Length)], new Vector3((float)(xTile * xNumberLenght - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.identity);
-
-                            }
-                            else
-                            {
-                                // left
-                                Instantiate(firstFloorWallsObjects[Random.Range(0, firstFloorWallsObjects.Length)], new Vector3((float)(0 - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
-                                //right
-                                Instantiate(firstFloorWallsObjects[Random.Range(0, firstFloorWallsObjects.Length)], new Vector3((float)(xTile * xNumberLenght - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.identity);
-
-                                if (Random.value < firstFloorAccessoriesPercentage) // first floor accessories percentage
-                                {
-                                    //spawn
-                                    // left
-                                    Instantiate(firstFloorAccessories[Random.Range(0, firstFloorAccessories.Length)], new Vector3((float)(0 - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
-                                    //right
-                                    Instantiate(firstFloorAccessories[Random.Range(0, firstFloorAccessories.Length)], new Vector3((float)(xTile * xNumberLenght - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.identity);
-                                }
-                                else
-                                {
-                                    //not spawn
-                                }
-                            }
-                        }
-                        else//main walls
-                        {
-                            if (brandmauer == true) // checks brandmauer bool
-                            {
-                                // left
-                                Instantiate(wallBrandmauer[Random.Range(0, wallBrandmauer.Length)], new Vector3((float)(0 - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
-                                //right
-                                Instantiate(wallBrandmauer[Random.Range(0, wallBrandmauer.Length)], new Vector3((float)(xTile * xNumberLenght - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.identity);
-
-                            }
-                            else
-                            {
-                                // left
-                                Instantiate(wallObjects[Random.Range(0, wallObjects.Length)], new Vector3((float)(0 - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
-                                //right
-                                Instantiate(wallObjects[Random.Range(0, wallObjects.Length)], new Vector3((float)(xTile * xNumberLenght - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.identity);
-
-                                // wall accessories with percentage
-                                if (Random.value < wallAccessoriesPercentage)  //spawn
-                                {
-                                    // left Accessories
-                                    Instantiate(wallAccessories[Random.Range(0, wallAccessories.Length)], new Vector3((float)(0 - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
-                                    //right Accessories
-                                    Instantiate(wallAccessories[Random.Range(0, wallAccessories.Length)], new Vector3((float)(xTile * xNumberLenght - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.identity);
-                                }
-                                else
-                                {
-                                    //null
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            for (int i = 0; i < xNumberLenght + 1; i++) // roof 
-            {
-                for (int j = 0; j <= zNumberWidth; j++)
-                {
-                    if (i * xTile == 0 && j * zTile == 0 || i * xTile == xNumberLenght && j * zTile == zNumberWidth || i * xTile == 0 && j * zTile == zNumberWidth || i * xTile == xNumberLenght && j * zTile == 0) // roof corners
-                    {
-                        if (brandmauer == true)//checks brandmauer
-                        {
-                            if (i * xTile == 0 && j * zTile == 0) //front left
-                            {
-                                Instantiate(roofCornerBrandmauer[Random.Range(0, roofCornerBrandmauer.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
-                            }
-                            else if (i * xTile == xNumberLenght && j * zTile == 0) //front right
-                            {
-                                Instantiate(roofCornerBrandmauer[Random.Range(0, roofCornerBrandmauer.Length)], new Vector3((float)(i * xTile - xTileHalf - 0.5), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
-                            }
-                            else if (i * xTile == 0 && j * zTile == zNumberWidth) //back left
-                            {
-                                Instantiate(roofCornerBrandmauer[Random.Range(0, roofCornerBrandmauer.Length)], new Vector3((float)(i * xTile - xTileHalf + 0.5), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0)));
-                            }
-                            else if (i * xTile == xNumberLenght && j * zTile == zNumberWidth)
-                            {
-                                Instantiate(roofCornerBrandmauer[Random.Range(0, roofCornerBrandmauer.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0)));
-                            }
-                        }
-                        else
-                        {
-                            if (i * xTile == 0 && j * zTile == 0) //front left
-                            {
-                                Instantiate(roofCornerObjects[Random.Range(0, roofCornerObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
-                            }
-                            else if (i * xTile == xNumberLenght && j * zTile == 0) //front right
-                            {
-                                Instantiate(roofCornerObjects[Random.Range(0, roofCornerObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 0, 0)));
-                            }
-                            else if (i * xTile == 0 && j * zTile == zNumberWidth) //back left
-                            {
-                                Instantiate(roofCornerObjects[Random.Range(0, roofCornerObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
-                            }
-                            else if (i * xTile == xNumberLenght && j * zTile == zNumberWidth)
-                            {
-                                Instantiate(roofCornerObjects[Random.Range(0, roofCornerObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0)));
-                            }
-                        }
-                    }
-                    else //main roof
-                    {
-                        if (j * zTile == 0)
-                        {
-                            Instantiate(roofObjects[Random.Range(0, roofObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0))); // left roof
-                        }
-                        else if (j * zTile == zNumberWidth)
-                        {
-                            Instantiate(roofObjects[Random.Range(0, roofObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0))); // right roof
-                        }
-                        else if (i * xTile == 0)
-                        {
-                            if (brandmauer == true)
-                            {
-                                Instantiate(roofBrandmauer[Random.Range(0, roofBrandmauer.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -180, 0)));  // back roof
-                            }
-                            else
-                            {
-                                Instantiate(roofObjects[Random.Range(0, roofObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -180, 0)));  // back roof
-
-                            }
-                        }
-                        else if (i * xTile == xNumberLenght)
-                        {
-                            if (brandmauer == true)
-                            {
-                                Instantiate(roofBrandmauer[Random.Range(0, roofBrandmauer.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.identity);  // front roof
-                            }
-                            else
-                            {
-                                Instantiate(roofObjects[Random.Range(0, roofObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.identity);  // front roof
-
-                            }
-                        }
-                        else
-                        {
-                            Instantiate(roofCupObjects[Random.Range(0, roofCupObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.identity); // roof cup
-                        }
-                    }
-
-                    if (i * xTile == 0 || j * zTile == 0 || i * xTile == xNumberLenght || j * zTile == zNumberWidth)
-                    {
-                        //not spawn
-                    }
-                    else if (Random.value < roofAccessoriesPercentage) // spawn
-                    {
-                        // roof accessories w random rotate by 90 degree
-                        Instantiate(roofAccessories[Random.Range(0, roofAccessories.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, Random.Range(0, 3) * 90, 0)));
-                    }
-                    else
-                    {
-                        //not spawn
-                    }
-                }
-            }
-            Debug.Log("Sizes: " + "x: " + xNumberLenght + ", " + "y: " + yNumberHeight + ", " + "z: " + zNumberWidth);
-            Debug.Log("Done");
         }
+        for (var i = 0; i < zNumberWidth; i++) // left && right facade　
+        {
+            for (int j = 0; j < yNumberHeight - 1; j++)
+            {
+                if (i * zNumberWidth == 0) // removes first elements
+                {
+                    //nothing
+                }
+                else
+                {
+                    if (j * yTile == 0) // first floor
+                    {
+                        if (brandmauer == true) // checks brandmauer bool
+                        {
+                            // left
+                            Instantiate(wallBrandmauer[Random.Range(0, wallBrandmauer.Length)], new Vector3((float)(0 - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
+                            //right
+                            Instantiate(wallBrandmauer[Random.Range(0, wallBrandmauer.Length)], new Vector3((float)(xTile * xNumberLenght - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.identity);
+
+                        }
+                        else
+                        {
+                            // left
+                            Instantiate(firstFloorWallsObjects[Random.Range(0, firstFloorWallsObjects.Length)], new Vector3((float)(0 - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
+                            //right
+                            Instantiate(firstFloorWallsObjects[Random.Range(0, firstFloorWallsObjects.Length)], new Vector3((float)(xTile * xNumberLenght - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.identity);
+
+                            if (Random.value < firstFloorAccessoriesPercentage) // first floor accessories percentage
+                            {
+                                //spawn
+                                // left
+                                Instantiate(firstFloorAccessories[Random.Range(0, firstFloorAccessories.Length)], new Vector3((float)(0 - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
+                                //right
+                                Instantiate(firstFloorAccessories[Random.Range(0, firstFloorAccessories.Length)], new Vector3((float)(xTile * xNumberLenght - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.identity);
+                            }
+                            else
+                            {
+                                //not spawn
+                            }
+                        }
+                    }
+                    else//main walls
+                    {
+                        if (brandmauer == true) // checks brandmauer bool
+                        {
+                            // left
+                            Instantiate(wallBrandmauer[Random.Range(0, wallBrandmauer.Length)], new Vector3((float)(0 - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
+                            //right
+                            Instantiate(wallBrandmauer[Random.Range(0, wallBrandmauer.Length)], new Vector3((float)(xTile * xNumberLenght - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.identity);
+
+                        }
+                        else
+                        {
+                            // left
+                            Instantiate(wallObjects[Random.Range(0, wallObjects.Length)], new Vector3((float)(0 - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
+                            //right
+                            Instantiate(wallObjects[Random.Range(0, wallObjects.Length)], new Vector3((float)(xTile * xNumberLenght - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.identity);
+
+                            // wall accessories with percentage
+                            if (Random.value < wallAccessoriesPercentage)  //spawn
+                            {
+                                // left Accessories
+                                Instantiate(wallAccessories[Random.Range(0, wallAccessories.Length)], new Vector3((float)(0 - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
+                                //right Accessories
+                                Instantiate(wallAccessories[Random.Range(0, wallAccessories.Length)], new Vector3((float)(xTile * xNumberLenght - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.identity);
+                            }
+                            else
+                            {
+                                //null
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < xNumberLenght + 1; i++) // roof 
+        {
+            for (int j = 0; j <= zNumberWidth; j++)
+            {
+                if (i * xTile == 0 && j * zTile == 0 || i * xTile == xNumberLenght && j * zTile == zNumberWidth || i * xTile == 0 && j * zTile == zNumberWidth || i * xTile == xNumberLenght && j * zTile == 0) // roof corners
+                {
+                    if (brandmauer == true)//checks brandmauer
+                    {
+                        if (i * xTile == 0 && j * zTile == 0) //front left
+                        {
+                            Instantiate(roofCornerBrandmauer[Random.Range(0, roofCornerBrandmauer.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
+                        }
+                        else if (i * xTile == xNumberLenght && j * zTile == 0) //front right
+                        {
+                            Instantiate(roofCornerBrandmauer[Random.Range(0, roofCornerBrandmauer.Length)], new Vector3((float)(i * xTile - xTileHalf - 0.5), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
+                        }
+                        else if (i * xTile == 0 && j * zTile == zNumberWidth) //back left
+                        {
+                            Instantiate(roofCornerBrandmauer[Random.Range(0, roofCornerBrandmauer.Length)], new Vector3((float)(i * xTile - xTileHalf + 0.5), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0)));
+                        }
+                        else if (i * xTile == xNumberLenght && j * zTile == zNumberWidth)
+                        {
+                            Instantiate(roofCornerBrandmauer[Random.Range(0, roofCornerBrandmauer.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0)));
+                        }
+                    }
+                    else
+                    {
+                        if (i * xTile == 0 && j * zTile == 0) //front left
+                        {
+                            Instantiate(roofCornerObjects[Random.Range(0, roofCornerObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
+                        }
+                        else if (i * xTile == xNumberLenght && j * zTile == 0) //front right
+                        {
+                            Instantiate(roofCornerObjects[Random.Range(0, roofCornerObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+                        }
+                        else if (i * xTile == 0 && j * zTile == zNumberWidth) //back left
+                        {
+                            Instantiate(roofCornerObjects[Random.Range(0, roofCornerObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
+                        }
+                        else if (i * xTile == xNumberLenght && j * zTile == zNumberWidth)
+                        {
+                            Instantiate(roofCornerObjects[Random.Range(0, roofCornerObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0)));
+                        }
+                    }
+                }
+                else //main roof
+                {
+                    if (j * zTile == 0)
+                    {
+                        Instantiate(roofObjects[Random.Range(0, roofObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0))); // left roof
+                    }
+                    else if (j * zTile == zNumberWidth)
+                    {
+                        Instantiate(roofObjects[Random.Range(0, roofObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0))); // right roof
+                    }
+                    else if (i * xTile == 0)
+                    {
+                        if (brandmauer == true)
+                        {
+                            Instantiate(roofBrandmauer[Random.Range(0, roofBrandmauer.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -180, 0)));  // back roof
+                        }
+                        else
+                        {
+                            Instantiate(roofObjects[Random.Range(0, roofObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -180, 0)));  // back roof
+
+                        }
+                    }
+                    else if (i * xTile == xNumberLenght)
+                    {
+                        if (brandmauer == true)
+                        {
+                            Instantiate(roofBrandmauer[Random.Range(0, roofBrandmauer.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.identity);  // front roof
+                        }
+                        else
+                        {
+                            Instantiate(roofObjects[Random.Range(0, roofObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.identity);  // front roof
+                        }
+                    }
+                    else
+                    {
+                        Instantiate(roofCupObjects[Random.Range(0, roofCupObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.identity); // roof cup
+                    }
+                }
+
+                if (i * xTile == 0 || j * zTile == 0 || i * xTile == xNumberLenght || j * zTile == zNumberWidth)
+                {
+                    //not spawn
+                }
+                else if (Random.value < roofAccessoriesPercentage) // spawn
+                {
+                    // roof accessories w random rotate by 90 degree
+                    Instantiate(roofAccessories[Random.Range(0, roofAccessories.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, Random.Range(0, 3) * 90, 0)));
+                }
+                else
+                {
+                    //not spawn
+                }
+            }
+        }
+        Debug.Log("Sizes: " + "x: " + xNumberLenght + ", " + "y: " + yNumberHeight + ", " + "z: " + zNumberWidth);
+        Debug.Log("Done");
+    }
+
+    void Start()
+    {
+        //calls building function
+    makeBuilding();
+        //calls stairs function
+    facadeStairs();
+
     }
 }
