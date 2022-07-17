@@ -70,7 +70,6 @@ public class Generator : MonoBehaviour
 
     public void Awake()
     {
-        // get percent
         wallAccessoriesPercentage = wallAccessoriesPercentage / 100; //wall
         roofAccessoriesPercentage = roofAccessoriesPercentage / 100; //roof
         firstFloorAccessoriesPercentage = firstFloorAccessoriesPercentage / 100; //first floor
@@ -133,15 +132,18 @@ public class Generator : MonoBehaviour
                             {
                                 if (j * yTile == 1) //first floor stairs
                                 {
-                                    Instantiate(stairsObjects[0], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(0 - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
+                                   GameObject stairsObjects0 =  Instantiate(stairsObjects[0], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(0 - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
+                                    stairsObjects0.transform.parent = transform;
                                 }
                                 else if (j * yTile == yNumberHeight - 1)//last floor stairs
                                 {
-                                    Instantiate(stairsObjects[2], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(0 - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
+                                    GameObject stairsObjects0 =  Instantiate(stairsObjects[2], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(0 - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
+                                    stairsObjects0.transform.parent = transform;
                                 }
                                 else if (j * yTile != yNumberHeight - 1 && j * yTile != 0)//main stairs
                                 {
-                                    Instantiate(stairsObjects[1], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(0 - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
+                                    GameObject stairsObjects0 = Instantiate(stairsObjects[1], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(0 - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
+                                    stairsObjects0.transform.parent = transform;
                                 }
                             }
                         }
@@ -158,15 +160,18 @@ public class Generator : MonoBehaviour
                             {
                                 if (j * yTile == 1) //first floor stairs
                                 {
-                                    Instantiate(stairsObjects[0], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(zTile * zNumberWidth - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0)));
+                                    GameObject stairsObjects0 = Instantiate(stairsObjects[0], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(zTile * zNumberWidth - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0)));
+                                    stairsObjects0.transform.parent = transform;
                                 }
                                 else if (j * yTile == yNumberHeight - 1)//last floor stairs
                                 {
-                                    Instantiate(stairsObjects[2], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(zTile * zNumberWidth - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0)));
+                                    GameObject stairsObjects0 = Instantiate(stairsObjects[2], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(zTile * zNumberWidth - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0)));
+                                    stairsObjects0.transform.parent = transform;
                                 }
                                 else if (j * yTile != yNumberHeight - 1 && j * yTile != 0)//main stairs
                                 {
-                                    Instantiate(stairsObjects[1], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(zTile * zNumberWidth - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0)));
+                                    GameObject stairsObjects0 = Instantiate(stairsObjects[1], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(zTile * zNumberWidth - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0)));
+                                    stairsObjects0.transform.parent = transform;
                                 }
                             }
                         }
@@ -187,15 +192,18 @@ public class Generator : MonoBehaviour
 
                                 if (j * yTile == 1) //first floor stairs
                                 {
-                                    Instantiate(stairsObjects[0], new Vector3((float)(0 - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
+                                    GameObject stairsObjects0 = Instantiate(stairsObjects[0], new Vector3((float)(0 - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
+                                    stairsObjects0.transform.parent = transform;
                                 }
                                 else if (j * yTile == yNumberHeight - 1)//last floor stairs
                                 {
-                                    Instantiate(stairsObjects[2], new Vector3((float)(0 - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
+                                    GameObject stairsObjects0 = Instantiate(stairsObjects[2], new Vector3((float)(0 - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
+                                    stairsObjects0.transform.parent = transform;
                                 }
                                 else if (j * yTile != yNumberHeight - 1 && j * yTile != 0)//main stairs
                                 {
-                                    Instantiate(stairsObjects[1], new Vector3((float)(0 - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
+                                    GameObject stairsObjects0 = Instantiate(stairsObjects[1], new Vector3((float)(0 - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
+                                    stairsObjects0.transform.parent = transform;
                                 }
 
 
@@ -221,15 +229,18 @@ public class Generator : MonoBehaviour
 
                                 if (j * yTile == 1) //first floor stairs
                                 {
-                                    Instantiate(stairsObjects[0], new Vector3((float)(xTile * xNumberLenght - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+                                    GameObject stairsObjects0 = Instantiate(stairsObjects[0], new Vector3((float)(xTile * xNumberLenght - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+                                    stairsObjects0.transform.parent = transform;
                                 }
                                 else if (j * yTile == yNumberHeight - 1)//last floor stairs
                                 {
-                                    Instantiate(stairsObjects[2], new Vector3((float)(xTile * xNumberLenght - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 0, 0))); ;
+                                    GameObject stairsObjects0 = Instantiate(stairsObjects[2], new Vector3((float)(xTile * xNumberLenght - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 0, 0))); ;
+                                    stairsObjects0.transform.parent = transform;
                                 }
                                 else if (j * yTile != yNumberHeight - 1 && j * yTile != 0)//main stairs
                                 {
-                                    Instantiate(stairsObjects[1], new Vector3((float)(xTile * xNumberLenght - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+                                    GameObject stairsObjects0 = Instantiate(stairsObjects[1], new Vector3((float)(xTile * xNumberLenght - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+                                    stairsObjects0.transform.parent = transform;
                                 }
                             }
                         }
@@ -272,19 +283,23 @@ public class Generator : MonoBehaviour
                                     //right
                                     GameObject gameObject1 = Instantiate(firstFloorCornerBrandmauer[Random.Range(0, firstFloorCornerBrandmauer.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(0 - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
                                     gameObject1.transform.localScale = new Vector3(1, 1, 1);
+                                    gameObject1.transform.parent = transform;
                                     //left
                                     GameObject gameObject2 = Instantiate(firstFloorCornerBrandmauer[Random.Range(0, firstFloorCornerBrandmauer.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(zTile * zNumberWidth - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
                                     gameObject2.transform.localScale = new Vector3(-1, 1, 1);
+                                    gameObject2.transform.parent = transform;
                                 }
                                 else // front corners
                                 {
                                     //right
                                     GameObject gameObject1 = Instantiate(firstFloorCornerBrandmauer[Random.Range(0, firstFloorCornerBrandmauer.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(0 - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0)));
                                     gameObject1.transform.localScale = new Vector3(-1, 1, 1);
+                                    gameObject1.transform.parent = transform;
 
                                     //left
                                     GameObject gameObject2 = Instantiate(firstFloorCornerBrandmauer[Random.Range(0, firstFloorCornerBrandmauer.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)((zTile * zNumberWidth) - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0)));
                                     gameObject2.transform.localScale = new Vector3(1, 1, 1);
+                                    gameObject2.transform.parent = transform;
                                 }
                             }
                             else
@@ -292,33 +307,45 @@ public class Generator : MonoBehaviour
                                 if (i * xTileHalf == 0) // back corners
                                 {
                                     //left
-                                    Instantiate(firstFloorCornersObjects[Random.Range(0, firstFloorCornersObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(0 - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
+                                    
+                                    GameObject cornerObject0 = Instantiate(firstFloorCornersObjects[Random.Range(0, firstFloorCornersObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(0 - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
+                                    cornerObject0.transform.parent = transform;
                                     //right
-                                    Instantiate(firstFloorCornersObjects[Random.Range(0, firstFloorCornersObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(zTile * zNumberWidth - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
+
+                                    GameObject cornerObject1 = Instantiate(firstFloorCornersObjects[Random.Range(0, firstFloorCornersObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(zTile * zNumberWidth - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
+                                    cornerObject1.transform.parent = transform;
                                 }
                                 else // front corners
                                 {
                                     //left
-                                    Instantiate(firstFloorCornersObjects[Random.Range(0, firstFloorCornersObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(0 - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+                                    GameObject cornerObject0 = Instantiate(firstFloorCornersObjects[Random.Range(0, firstFloorCornersObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(0 - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+                                    cornerObject0.transform.parent = transform;
                                     //right
-                                    Instantiate(firstFloorCornersObjects[Random.Range(0, firstFloorCornersObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)((zTile * zNumberWidth) - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0)));
+
+                                    GameObject cornerObject1= Instantiate(firstFloorCornersObjects[Random.Range(0, firstFloorCornersObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)((zTile * zNumberWidth) - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0)));
+                                    cornerObject1.transform.parent = transform;
                                 }
                             }
                         }
                         else //first floor
                         {
                             //front
-                            Instantiate(firstFloorWallsObjects[Random.Range(0, firstFloorWallsObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(0 - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
+                            GameObject cornerObject0 = Instantiate(firstFloorWallsObjects[Random.Range(0, firstFloorWallsObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(0 - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
+                            cornerObject0.transform.parent = transform;
                             //back
-                            Instantiate(firstFloorWallsObjects[Random.Range(0, firstFloorWallsObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(zTile * zNumberWidth - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0)));
+
+                            GameObject cornerObject1 = Instantiate(firstFloorWallsObjects[Random.Range(0, firstFloorWallsObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(zTile * zNumberWidth - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0)));
+                            cornerObject1.transform.parent = transform;
 
                             if (Random.value < firstFloorAccessoriesPercentage) // first floor accessories percentage
                             {
                                 //spawn
                                 //front
-                                Instantiate(firstFloorAccessories[Random.Range(0, firstFloorAccessories.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(0 - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
+                                GameObject firstFloorAccessories0 = Instantiate(firstFloorAccessories[Random.Range(0, firstFloorAccessories.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(0 - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
+                                firstFloorAccessories0.transform.parent = transform;
                                 //back
-                                Instantiate(firstFloorAccessories[Random.Range(0, firstFloorAccessories.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(zTile * zNumberWidth - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0)));
+                                GameObject firstFloorAccessories1 = Instantiate(firstFloorAccessories[Random.Range(0, firstFloorAccessories.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(zTile * zNumberWidth - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0)));
+                                firstFloorAccessories1.transform.parent = transform;
                             }
                             else
                             {
@@ -335,16 +362,20 @@ public class Generator : MonoBehaviour
                                 if (i * xTile == 0) //left corners
                                 {
                                     // left corner
-                                    Instantiate(wallCornerObjects[Random.Range(0, wallCornerObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(0 - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
+                                    GameObject cornerObject0 = Instantiate(wallCornerObjects[Random.Range(0, wallCornerObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(0 - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
+                                    cornerObject0.transform.parent = transform;
                                     // left back corner
-                                    Instantiate(wallCornerObjects[Random.Range(0, wallCornerObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(zTile * zNumberWidth - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
+                                    GameObject cornerObject1 = Instantiate(wallCornerObjects[Random.Range(0, wallCornerObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(zTile * zNumberWidth - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
+                                    cornerObject1.transform.parent = transform;
                                 }
                                 else //right corners
                                 {
                                     // right corner
-                                    Instantiate(wallCornerObjects[Random.Range(0, wallCornerObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(0 - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+                                    GameObject cornerObject0 = Instantiate(wallCornerObjects[Random.Range(0, wallCornerObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(0 - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+                                    cornerObject0.transform.parent = transform;
                                     // right front corner
-                                    Instantiate(wallCornerObjects[Random.Range(0, wallCornerObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(zTile * zNumberWidth - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0)));
+                                    GameObject cornerObject1 = Instantiate(wallCornerObjects[Random.Range(0, wallCornerObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(zTile * zNumberWidth - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0)));
+                                    cornerObject1.transform.parent = transform;
                                 }
                             }
                             else
@@ -352,16 +383,20 @@ public class Generator : MonoBehaviour
                                 if (i * xTile == 0) //left corners
                                 {
                                     // left corner
-                                    Instantiate(wallCornerObjects[Random.Range(0, wallCornerObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(0 - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
+                                    GameObject cornerObject0 = Instantiate(wallCornerObjects[Random.Range(0, wallCornerObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(0 - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
+                                    cornerObject0.transform.parent = transform;
                                     // left back corner
-                                    Instantiate(wallCornerObjects[Random.Range(0, wallCornerObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(zTile * zNumberWidth - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
+                                    GameObject cornerObject1 = Instantiate(wallCornerObjects[Random.Range(0, wallCornerObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(zTile * zNumberWidth - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
+                                    cornerObject1.transform.parent = transform;
                                 }
                                 else //right corners
                                 {
                                     // right corner
-                                    Instantiate(wallCornerObjects[Random.Range(0, wallCornerObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(0 - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+                                    GameObject cornerObject0 = Instantiate(wallCornerObjects[Random.Range(0, wallCornerObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(0 - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+                                    cornerObject0.transform.parent = transform;
                                     // right front corner
-                                    Instantiate(wallCornerObjects[Random.Range(0, wallCornerObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(zTile * zNumberWidth - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0)));
+                                    GameObject cornerObject1 = Instantiate(wallCornerObjects[Random.Range(0, wallCornerObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(zTile * zNumberWidth - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0)));
+                                    cornerObject1.transform.parent = transform;
                                 }
                             }
                         }
@@ -369,18 +404,21 @@ public class Generator : MonoBehaviour
                         else // main walls
                         {
                             //front
-                            Instantiate(wallObjects[Random.Range(0, wallObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(0 - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
+                            GameObject wallObjects0 = Instantiate(wallObjects[Random.Range(0, wallObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(0 - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
+                            wallObjects0.transform.parent = transform;
                             //back
-                            Instantiate(wallObjects[Random.Range(0, wallObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(zTile * zNumberWidth - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0)));
-
+                            GameObject wallObjects1 = Instantiate(wallObjects[Random.Range(0, wallObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(zTile * zNumberWidth - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0)));
+                            wallObjects1.transform.parent = transform;
                         }
                             if (Random.value < wallAccessoriesPercentage && i*xTile !=0 && i*xTile != xNumberLenght)  // wall accessories with percentage
                             {
-                                //spawn
-                                //front Accessories
-                                Instantiate(wallAccessories[Random.Range(0, wallAccessories.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(0 - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
-                                //back Accessories
-                                Instantiate(wallAccessories[Random.Range(0, wallAccessories.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(zTile * zNumberWidth - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0)));
+                            //spawn
+                            //front Accessories
+                            GameObject wallAccessoriesObjects0 = Instantiate(wallAccessories[Random.Range(0, wallAccessories.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(0 - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
+                            wallAccessoriesObjects0.transform.parent = transform;
+                            //back Accessories
+                            GameObject wallAccessoriesObjects1 = Instantiate(wallAccessories[Random.Range(0, wallAccessories.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(j * yTile + upGroundValue), (float)(zTile * zNumberWidth - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0)));
+                            wallAccessoriesObjects1.transform.parent = transform;
                             }
                             else
                             {
@@ -405,25 +443,30 @@ public class Generator : MonoBehaviour
                         if (brandmauer == true) // checks brandmauer bool
                         {
                             // left
-                            Instantiate(wallBrandmauer[Random.Range(0, wallBrandmauer.Length)], new Vector3((float)(0 - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
+                            GameObject wallObjects0 = Instantiate(wallBrandmauer[Random.Range(0, wallBrandmauer.Length)], new Vector3((float)(0 - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
+                            wallObjects0.transform.parent = transform;
                             //right
-                            Instantiate(wallBrandmauer[Random.Range(0, wallBrandmauer.Length)], new Vector3((float)(xTile * xNumberLenght - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.identity);
-
+                            GameObject wallObjects1 = Instantiate(wallBrandmauer[Random.Range(0, wallBrandmauer.Length)], new Vector3((float)(xTile * xNumberLenght - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.identity);
+                            wallObjects1.transform.parent = transform;
                         }
                         else
                         {
                             // left
-                            Instantiate(firstFloorWallsObjects[Random.Range(0, firstFloorWallsObjects.Length)], new Vector3((float)(0 - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
+                            GameObject wallObjects0 =  Instantiate(firstFloorWallsObjects[Random.Range(0, firstFloorWallsObjects.Length)], new Vector3((float)(0 - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
+                            wallObjects0.transform.parent = transform;
                             //right
-                            Instantiate(firstFloorWallsObjects[Random.Range(0, firstFloorWallsObjects.Length)], new Vector3((float)(xTile * xNumberLenght - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.identity);
+                            GameObject wallObjects1 = Instantiate(firstFloorWallsObjects[Random.Range(0, firstFloorWallsObjects.Length)], new Vector3((float)(xTile * xNumberLenght - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.identity);
+                            wallObjects1.transform.parent = transform;
 
                             if (Random.value < firstFloorAccessoriesPercentage) // first floor accessories percentage
                             {
                                 //spawn
                                 // left
-                                Instantiate(firstFloorAccessories[Random.Range(0, firstFloorAccessories.Length)], new Vector3((float)(0 - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
+                                GameObject wallAccessoriesObjects0 = Instantiate(firstFloorAccessories[Random.Range(0, firstFloorAccessories.Length)], new Vector3((float)(0 - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
+                                wallAccessoriesObjects0.transform.parent = transform;
                                 //right
-                                Instantiate(firstFloorAccessories[Random.Range(0, firstFloorAccessories.Length)], new Vector3((float)(xTile * xNumberLenght - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.identity);
+                                GameObject wallAccessoriesObjects1 = Instantiate(firstFloorAccessories[Random.Range(0, firstFloorAccessories.Length)], new Vector3((float)(xTile * xNumberLenght - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.identity);
+                                wallAccessoriesObjects1.transform.parent = transform;
                             }
                             else
                             {
@@ -436,25 +479,30 @@ public class Generator : MonoBehaviour
                         if (brandmauer == true) // checks brandmauer bool
                         {
                             // left
-                            Instantiate(wallBrandmauer[Random.Range(0, wallBrandmauer.Length)], new Vector3((float)(0 - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
+                            GameObject wallObjects0 = Instantiate(wallBrandmauer[Random.Range(0, wallBrandmauer.Length)], new Vector3((float)(0 - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
+                            wallObjects0.transform.parent = transform;
                             //right
-                            Instantiate(wallBrandmauer[Random.Range(0, wallBrandmauer.Length)], new Vector3((float)(xTile * xNumberLenght - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.identity);
-
+                            GameObject wallObjects1 = Instantiate(wallBrandmauer[Random.Range(0, wallBrandmauer.Length)], new Vector3((float)(xTile * xNumberLenght - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.identity);
+                            wallObjects1.transform.parent = transform;
                         }
                         else
                         {
                             // left
-                            Instantiate(wallObjects[Random.Range(0, wallObjects.Length)], new Vector3((float)(0 - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
+                            GameObject wallObjects0 = Instantiate(wallObjects[Random.Range(0, wallObjects.Length)], new Vector3((float)(0 - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
+                            wallObjects0.transform.parent = transform;
                             //right
-                            Instantiate(wallObjects[Random.Range(0, wallObjects.Length)], new Vector3((float)(xTile * xNumberLenght - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.identity);
+                            GameObject wallObjects1 = Instantiate(wallObjects[Random.Range(0, wallObjects.Length)], new Vector3((float)(xTile * xNumberLenght - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.identity);
+                            wallObjects1.transform.parent = transform;
 
                             // wall accessories with percentage
                             if (Random.value < wallAccessoriesPercentage)  //spawn
                             {
                                 // left Accessories
-                                Instantiate(wallAccessories[Random.Range(0, wallAccessories.Length)], new Vector3((float)(0 - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
+                                GameObject wallAccessoriesObjects0 = Instantiate(wallAccessories[Random.Range(0, wallAccessories.Length)], new Vector3((float)(0 - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
+                                wallAccessoriesObjects0.transform.parent = transform;
                                 //right Accessories
-                                Instantiate(wallAccessories[Random.Range(0, wallAccessories.Length)], new Vector3((float)(xTile * xNumberLenght - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.identity);
+                                GameObject wallAccessoriesObjects1 = Instantiate(wallAccessories[Random.Range(0, wallAccessories.Length)], new Vector3((float)(xTile * xNumberLenght - xTileHalf), (float)(j * yTile + upGroundValue), (float)(i * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.identity);
+                                wallAccessoriesObjects1.transform.parent = transform;
                             }
                             else
                             {
@@ -475,38 +523,46 @@ public class Generator : MonoBehaviour
                     {
                         if (i * xTile == 0 && j * zTile == 0) //front left
                         {
-                            Instantiate(roofCornerBrandmauer[Random.Range(0, roofCornerBrandmauer.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
+                           GameObject roofObjects0 = Instantiate(roofCornerBrandmauer[Random.Range(0, roofCornerBrandmauer.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
+                           roofObjects0.transform.parent = transform;
                         }
                         else if (i * xTile == xNumberLenght && j * zTile == 0) //front right
                         {
-                            Instantiate(roofCornerBrandmauer[Random.Range(0, roofCornerBrandmauer.Length)], new Vector3((float)(i * xTile - xTileHalf - 0.5), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
+                            GameObject roofObjects0 = Instantiate(roofCornerBrandmauer[Random.Range(0, roofCornerBrandmauer.Length)], new Vector3((float)(i * xTile - xTileHalf - 0.5), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
+                            roofObjects0.transform.parent = transform;
                         }
                         else if (i * xTile == 0 && j * zTile == zNumberWidth) //back left
                         {
-                            Instantiate(roofCornerBrandmauer[Random.Range(0, roofCornerBrandmauer.Length)], new Vector3((float)(i * xTile - xTileHalf + 0.5), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0)));
+                            GameObject roofObjects0 = Instantiate(roofCornerBrandmauer[Random.Range(0, roofCornerBrandmauer.Length)], new Vector3((float)(i * xTile - xTileHalf + 0.5), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0)));
+                            roofObjects0.transform.parent = transform;
                         }
                         else if (i * xTile == xNumberLenght && j * zTile == zNumberWidth)
                         {
-                            Instantiate(roofCornerBrandmauer[Random.Range(0, roofCornerBrandmauer.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0)));
+                            GameObject roofObjects0 = Instantiate(roofCornerBrandmauer[Random.Range(0, roofCornerBrandmauer.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0)));
+                            roofObjects0.transform.parent = transform;
                         }
                     }
                     else
                     {
                         if (i * xTile == 0 && j * zTile == 0) //front left
                         {
-                            Instantiate(roofCornerObjects[Random.Range(0, roofCornerObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
+                            GameObject roofObjects0 = Instantiate(roofCornerObjects[Random.Range(0, roofCornerObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0)));
+                            roofObjects0.transform.parent = transform;
                         }
                         else if (i * xTile == xNumberLenght && j * zTile == 0) //front right
                         {
-                            Instantiate(roofCornerObjects[Random.Range(0, roofCornerObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+                            GameObject roofObjects0 = Instantiate(roofCornerObjects[Random.Range(0, roofCornerObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+                            roofObjects0.transform.parent = transform;
                         }
                         else if (i * xTile == 0 && j * zTile == zNumberWidth) //back left
                         {
-                            Instantiate(roofCornerObjects[Random.Range(0, roofCornerObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
+                            GameObject roofObjects0 = Instantiate(roofCornerObjects[Random.Range(0, roofCornerObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 180, 0)));
+                            roofObjects0.transform.parent = transform;
                         }
                         else if (i * xTile == xNumberLenght && j * zTile == zNumberWidth)
                         {
-                            Instantiate(roofCornerObjects[Random.Range(0, roofCornerObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0)));
+                            GameObject roofObjects0 = Instantiate(roofCornerObjects[Random.Range(0, roofCornerObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0)));
+                            roofObjects0.transform.parent = transform;
                         }
                     }
                 }
@@ -514,38 +570,44 @@ public class Generator : MonoBehaviour
                 {
                     if (j * zTile == 0)
                     {
-                        Instantiate(roofObjects[Random.Range(0, roofObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0))); // left roof
+                        GameObject roofObjects0 = Instantiate(roofObjects[Random.Range(0, roofObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, 90, 0))); // left roof
+                        roofObjects0.transform.parent = transform;
                     }
                     else if (j * zTile == zNumberWidth)
                     {
-                        Instantiate(roofObjects[Random.Range(0, roofObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0))); // right roof
+                        GameObject roofObjects0 = Instantiate(roofObjects[Random.Range(0, roofObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -90, 0))); // right roof
+                        roofObjects0.transform.parent = transform;
                     }
                     else if (i * xTile == 0)
                     {
                         if (brandmauer == true)
                         {
-                            Instantiate(roofBrandmauer[Random.Range(0, roofBrandmauer.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -180, 0)));  // back roof
+                            GameObject roofObjects0 = Instantiate(roofBrandmauer[Random.Range(0, roofBrandmauer.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -180, 0)));  // back roof
+                            roofObjects0.transform.parent = transform;
                         }
                         else
                         {
-                            Instantiate(roofObjects[Random.Range(0, roofObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -180, 0)));  // back roof
-
+                            GameObject roofObjects0 = Instantiate(roofObjects[Random.Range(0, roofObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, -180, 0)));  // back roof
+                            roofObjects0.transform.parent = transform;
                         }
                     }
                     else if (i * xTile == xNumberLenght)
                     {
                         if (brandmauer == true)
                         {
-                            Instantiate(roofBrandmauer[Random.Range(0, roofBrandmauer.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.identity);  // front roof
+                            GameObject roofObjects0 = Instantiate(roofBrandmauer[Random.Range(0, roofBrandmauer.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.identity);  // front roof
+                            roofObjects0.transform.parent = transform;
                         }
                         else
                         {
-                            Instantiate(roofObjects[Random.Range(0, roofObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.identity);  // front roof
+                            GameObject roofObjects0 = Instantiate(roofObjects[Random.Range(0, roofObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.identity);  // front roof
+                            roofObjects0.transform.parent = transform;
                         }
                     }
                     else
                     {
-                        Instantiate(roofCupObjects[Random.Range(0, roofCupObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.identity); // roof cup
+                        GameObject roofObjects0 = Instantiate(roofCupObjects[Random.Range(0, roofCupObjects.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.identity); // roof cup
+                        roofObjects0.transform.parent = transform;
                     }
                 }
 
@@ -556,7 +618,8 @@ public class Generator : MonoBehaviour
                 else if (Random.value < roofAccessoriesPercentage) // spawn
                 {
                     // roof accessories w random rotate by 90 degree
-                    Instantiate(roofAccessories[Random.Range(0, roofAccessories.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, Random.Range(0, 3) * 90, 0)));
+                    GameObject roofObjects0 = Instantiate(roofAccessories[Random.Range(0, roofAccessories.Length)], new Vector3((float)(i * xTile - xTileHalf), (float)(yTile * (yNumberHeight - 1) + upGroundValue), (float)(j * zTile - zTileHalf)) + pickedObjectPosition.position, Quaternion.Euler(new Vector3(0, Random.Range(0, 3) * 90, 0)));
+                    roofObjects0.transform.parent = transform;
                 }
                 else
                 {
@@ -571,9 +634,9 @@ public class Generator : MonoBehaviour
     void Start()
     {
         //calls building function
-    makeBuilding();
+        makeBuilding();
         //calls stairs function
-    facadeStairs();
+        facadeStairs();
 
     }
 }
