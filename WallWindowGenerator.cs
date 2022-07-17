@@ -34,19 +34,22 @@ public class WallWindowGenerator : MonoBehaviour
             gameObject5.transform.parent = transform;
             gameObject6.transform.parent = transform;
             gameObject7.transform.parent = transform;
+
         }
         else
         {
             //spawn objects
-            GameObject gameObject8 = Instantiate(wallGlass[Random.Range(1,wallGlass.Length)], transform.position, transform.rotation);
+            GameObject gameObject5 = Instantiate(wallGlass[Random.Range(1,wallGlass.Length)], transform.position, transform.rotation);
             //parent objects
-            gameObject8.transform.parent = transform;
+            gameObject5.transform.parent = transform;
         }
         //parent objects
         gameObject1.transform.parent = transform;
         gameObject2.transform.parent = transform;
         gameObject3.transform.parent = transform;
         gameObject4.transform.parent = transform;
+
     }
+
 
 }
