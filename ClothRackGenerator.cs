@@ -73,50 +73,50 @@ public class ClothRackGenerator : MonoBehaviour
                         //towel2
                         if (Random.value < towelPercentage)
                         { 
-                        GameObject gameObject2 = Instantiate(towels[1], transform.position, transform.rotation);
-                            gameObject2.transform.parent = transform;
+                        GameObject gameObject1 = Instantiate(towels[1], transform.position, transform.rotation);
+                            gameObject1.transform.parent = transform;
                             //gameObject2.transform.position = transform.position;
-                            gameObject2.GetComponentInParent<Transform>().localPosition = gameObject2.transform.localPosition + new Vector3((float)(i * 0.017), 0, (float)(j * 0.15));
+                            gameObject1.GetComponentInParent<Transform>().localPosition = gameObject1.transform.localPosition + new Vector3((float)(i * 0.017), 0, (float)(j * 0.15));
                         }
                         break;
                     case 2:
                         //towel3
                         if(Random.value < towelPercentage)
                         {
-                         GameObject gameObject3 = Instantiate(towels[2],transform.position, transform.rotation);
-                            gameObject3.transform.parent = transform;
+                         GameObject gameObject1 = Instantiate(towels[2],transform.position, transform.rotation);
+                            gameObject1.transform.parent = transform;
                             //gameObject3.transform.position = transform.position;
-                            gameObject3.GetComponentInParent<Transform>().localPosition = gameObject3.transform.localPosition + new Vector3((float)(i * 0.017), 0, (float)(j * 0.125));
+                            gameObject1.GetComponentInParent<Transform>().localPosition = gameObject1.transform.localPosition + new Vector3((float)(i * 0.017), 0, (float)(j * 0.125));
                         }        
                         break;
                     case 3:
                         //towel4
                         if (Random.value < towelPercentage)
                         {
-                         GameObject gameObject4 = Instantiate(towels[3], transform.position, transform.rotation);
-                            gameObject4.transform.parent = transform;
+                         GameObject gameObject1 = Instantiate(towels[3], transform.position, transform.rotation);
+                            gameObject1.transform.parent = transform;
                             //gameObject4.transform.position = transform.position;
-                            gameObject4.GetComponentInParent<Transform>().localPosition = gameObject4.transform.localPosition + new Vector3((float)(i * 0.017), 0, (float)(j * 0.12));
+                            gameObject1.GetComponentInParent<Transform>().localPosition = gameObject1.transform.localPosition + new Vector3((float)(i * 0.017), 0, (float)(j * 0.12));
                         }
                         break;
                     case 4:
                         //towel5
                         if (Random.value < towelPercentage)
                         {
-                           GameObject gameObject5 = Instantiate(towels[4], transform.position, transform.rotation);
-                            gameObject5.transform.parent = transform;
+                           GameObject gameObject1 = Instantiate(towels[4], transform.position, transform.rotation);
+                            gameObject1.transform.parent = transform;
                             //gameObject5.transform.position = transform.position;
-                            gameObject5.GetComponentInParent<Transform>().localPosition = gameObject5.transform.localPosition + new Vector3((float)(i * 0.017), 0, (float)(j * 0.1));
+                            gameObject1.GetComponentInParent<Transform>().localPosition = gameObject1.transform.localPosition + new Vector3((float)(i * 0.017), 0, (float)(j * 0.1));
                         }
                         break;
                     case 5:
                         //towel
                         if (Random.value < towelPercentage)
                         {
-                           GameObject gameObject6 = Instantiate(towels[5], transform.position, transform.rotation);
-                            gameObject6.transform.parent = transform;
+                           GameObject gameObject1 = Instantiate(towels[5], transform.position, transform.rotation);
+                            gameObject1.transform.parent = transform;
                             //gameObject6.transform.position = transform.position;
-                            gameObject6.GetComponentInParent<Transform>().localPosition = gameObject6.transform.localPosition + new Vector3((float)(i * 0.017), 0, (float)(j * 0.075));
+                            gameObject1.GetComponentInParent<Transform>().localPosition = gameObject1.transform.localPosition + new Vector3((float)(i * 0.017), 0, (float)(j * 0.075));
                         }
                         break;
                 }
