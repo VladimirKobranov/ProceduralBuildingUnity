@@ -1,4 +1,4 @@
-# Parametric Building configurator in Unity
+# Parametric Building generator in Unity
 Simple configurator for unity</br>
 Requires models 1x1(m) unit size</br>
 
