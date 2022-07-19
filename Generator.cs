@@ -20,8 +20,11 @@ public class Generator : MonoBehaviour
     private double xTileHalf;
     private double zTileHalf;
     // accessoires percentages
+    [Range(0, 100)]
     public double wallAccessoriesPercentage;
+    [Range(0, 100)]
     public double firstFloorAccessoriesPercentage;
+    [Range(0, 100)]
     public double roofAccessoriesPercentage;
     //random seed
     public int randomSeed;
@@ -637,6 +640,13 @@ public class Generator : MonoBehaviour
         makeBuilding();
         //calls stairs function
         facadeStairs();
+
+        //hides boxes with "Boxes" tag
+        GameObject[] boxes = GameObject.FindGameObjectsWithTag("Boxes");
+        for(int i = 0; i < boxes.Length; i++)
+        {
+            boxes[i].SetActive(false);
+        }
 
     }
 }
