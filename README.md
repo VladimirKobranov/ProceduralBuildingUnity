@@ -14,6 +14,7 @@
 4. Create a facade stairs by selecting facade and position on it, or choosing random position.
 5. Added wall\roof accessories by percentage of spreading and randomizing them by seed.
 6. Can transfer position and dimensions from selected scene object.
+7. Includes randomly generated walls\accessories.
 
 Project files: [Google Disk](https://drive.google.com/drive/folders/1WzkjoI9MMw9mzr7GbLCYx0iHBZpgvz2M?usp=sharing)</br>
 Explanation of logic(on Russian): [Habr](https://habr.com/ru/post/679676/)</br>
