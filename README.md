@@ -55,6 +55,3 @@ Explanation of logic(on Russian): [Habr](https://habr.com/ru/post/679676/)</br>
 <p align="center">
 <sub>YouTube example</sub>
 </p>
-
-**Project files:** [Google Disk](https://drive.google.com/drive/folders/1WzkjoI9MMw9mzr7GbLCYx0iHBZpgvz2M?usp=sharing)</br>
-**Explanation of logic(on Russian):** [Habr](https://habr.com/ru/post/679676/)</br>
